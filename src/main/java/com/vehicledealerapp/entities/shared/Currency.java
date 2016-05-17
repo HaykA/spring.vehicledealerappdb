@@ -17,8 +17,5 @@ public class Currency implements Serializable {
 	private long id;
 	
 	private String name;
-	
-	public String getName() {
-		return name;
-	}
+
 }

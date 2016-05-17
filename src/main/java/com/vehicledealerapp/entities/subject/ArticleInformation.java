@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.vehicledealerapp.entities.shared.Branch;
-import com.vehicledealerapp.entities.shared.ContactPerson;
-import com.vehicledealerapp.entities.shared.Currency;
+import com.vehicledealerapp.entities.shared.Person;
 import com.vehicledealerapp.entities.system.User;
 import com.vehicledealerapp.enums.ArticleState;
 
@@ -36,10 +36,6 @@ public class ArticleInformation implements Serializable {
 	private long id;
 	private String reference;
 	private String title;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "currencyid")
-	private Currency currency;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created")
@@ -60,33 +56,32 @@ public class ArticleInformation implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private ArticleState state;
 	
-	private BigDecimal basePrice;
-	private BigDecimal priceReduction;
+	private BigDecimal basePrice = BigDecimal.ZERO;
+	private BigDecimal priceReduction = BigDecimal.ZERO;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "branchid")
 	private Branch branch;
 	
 	@ManyToMany
-	@JoinTable(
-			name = "category",
-			joinColumns = @JoinColumn(name = "categoryid"),
-			inverseJoinColumns = @JoinColumn(name = "articleid")
-			)
-	private Set<Category> categories;
+	@JoinTable(name = "article_tag",
+			joinColumns = @JoinColumn(name = "tagid"),
+			inverseJoinColumns = @JoinColumn(name = "articleid"))
+	private Set<Tag> tags = new TreeSet<>();
 	
 	@ManyToMany
-	@JoinTable(
-			name = "person",
+	@JoinTable(name = "article_person",
 			joinColumns = @JoinColumn(name = "personid"),
 			inverseJoinColumns = @JoinColumn(name = "articleid")
 			)
-	private Set<ContactPerson> contactPersons;
+	private Set<Person> contactPersons = new TreeSet<>();
 	
 	private int views;
 
 	public BigDecimal getPrice() {
 		return basePrice.subtract(priceReduction);
 	}
+	
+	private String description;
 	
 }
