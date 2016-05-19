@@ -26,6 +26,7 @@ class IndexController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	ModelAndView index(Locale locale) {
-		return new ModelAndView(INDEX, "countries", countryService.findAll());
+		return new ModelAndView(INDEX,
+			"countries", countryService.findWhereEnabled());
 	}
 }

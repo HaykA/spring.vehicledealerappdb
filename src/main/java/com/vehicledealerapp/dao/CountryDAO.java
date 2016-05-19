@@ -8,4 +8,5 @@ import com.vehicledealerapp.entities.shared.Country;
 
 public interface CountryDAO  extends JpaRepository<Country, Long> {
 	List<Country> findAll();
+	List<Country> findByEnabled(boolean enabled);
 }

@@ -38,13 +38,14 @@ CREATE TABLE `article` (
   `branchid` int(9) unsigned NOT NULL,
   `views` int(9) unsigned NOT NULL DEFAULT '0',
   `description` varchar(2000) DEFAULT NULL,
-  PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_article$branchid_idx` (`branchid`),
+  KEY `fk_article$creator_idx` (`creatorid`),
+  KEY `fk_article$modifier_idx` (`modifierid`),
   CONSTRAINT `fk_article$branch` FOREIGN KEY (`branchid`) REFERENCES `branch` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_article$creator` FOREIGN KEY (`id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_article$modifier` FOREIGN KEY (`id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_article$creator` FOREIGN KEY (`creatorid`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_article$modifier` FOREIGN KEY (`modifierid`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,6 +54,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
+INSERT INTO `article` VALUES (4,'C001','OPEL ZAFIRA 1.7 TDi Cosmo','2016-05-16',1,'2016-05-17',1,'USED',2550,7,1,6,'First car');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +150,7 @@ CREATE TABLE `auth_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `personid_UNIQUE` (`personid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,6 +159,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,1,'hayk','demo',1);
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +204,7 @@ CREATE TABLE `branch` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_branch$city_idx` (`cityid`),
   CONSTRAINT `fk_branch$city` FOREIGN KEY (`cityid`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,6 +213,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
+INSERT INTO `branch` VALUES (1,NULL,'Koningstraat','5','2',1);
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +231,7 @@ CREATE TABLE `brand` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,6 +240,7 @@ CREATE TABLE `brand` (
 
 LOCK TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
+INSERT INTO `brand` VALUES (1,'opel',NULL);
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +284,7 @@ CREATE TABLE `city` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_city$countryid_idx` (`countryid`),
   CONSTRAINT `fk_city$country` FOREIGN KEY (`countryid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +293,33 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
+INSERT INTO `city` VALUES (1,'Brussel','1000',1);
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `continent`
+--
+
+DROP TABLE IF EXISTS `continent`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `continent` (
+  `id` int(1) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `continent`
+--
+
+LOCK TABLES `continent` WRITE;
+/*!40000 ALTER TABLE `continent` DISABLE KEYS */;
+/*!40000 ALTER TABLE `continent` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -301,10 +332,13 @@ DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
   `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `continent` int(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  KEY `fk_country$continent_idx` (`continent`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,6 +347,7 @@ CREATE TABLE `country` (
 
 LOCK TABLES `country` WRITE;
 /*!40000 ALTER TABLE `country` DISABLE KEYS */;
+INSERT INTO `country` VALUES (1,'Afghanistan',0,0),(2,'Albania',0,0),(3,'Algeria',0,0),(4,'Andorra',0,0),(5,'Angola',0,0),(6,'Antigua and Barbuda',0,0),(7,'Argentina',0,0),(8,'Armenia',0,0),(9,'Australia',0,0),(10,'Austria',0,0),(11,'Azerbaijan',0,0),(12,'Bahamas',0,0),(13,'Bahrain',0,0),(14,'Bangladesh',0,0),(15,'Barbados',0,0),(16,'Belarus',0,0),(17,'Belgium',1,0),(18,'Belize',0,0),(19,'Benin',0,0),(20,'Bhutan',0,0),(21,'Bolivia',0,0),(22,'Bosnia and Herzegovina',0,0),(23,'Botswana',0,0),(24,'Brazil',0,0),(25,'Brunei',0,0),(26,'Bulgaria',0,0),(27,'Burkina Faso',0,0),(28,'Burma',0,0),(29,'Burundi',0,0),(30,'Cambodia',0,0),(31,'Cameroon',0,0),(32,'Cape Verde',0,0),(33,'Central African Republic',0,0),(34,'Chad',0,0),(35,'Chile',0,0),(36,'China',0,0),(37,'Colombia',0,0),(38,'Comoros',0,0),(39,'Congo (DRC)',0,0),(40,'Congo (Republic)',0,0),(41,'Costa Rica',0,0),(42,'Croatia',0,0),(43,'Cuba',0,0),(44,'Cyprus',0,0),(45,'Czech Republic',0,0),(46,'Denmark',0,0);
 /*!40000 ALTER TABLE `country` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,7 +389,7 @@ CREATE TABLE `person` (
   `branchid` int(9) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,6 +398,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
+INSERT INTO `person` VALUES (1,'Hayk','Avetisyan',1);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -415,6 +451,7 @@ CREATE TABLE `vehicle` (
 
 LOCK TABLES `vehicle` WRITE;
 /*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
+INSERT INTO `vehicle` VALUES (1,1,'2005-04-25','2005-08-14',70000);
 /*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +468,7 @@ CREATE TABLE `vehicle_model` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,6 +477,7 @@ CREATE TABLE `vehicle_model` (
 
 LOCK TABLES `vehicle_model` WRITE;
 /*!40000 ALTER TABLE `vehicle_model` DISABLE KEYS */;
+INSERT INTO `vehicle_model` VALUES (1,1,'zafira');
 /*!40000 ALTER TABLE `vehicle_model` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,7 +492,7 @@ CREATE TABLE `vehicle_option` (
   `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,6 +501,7 @@ CREATE TABLE `vehicle_option` (
 
 LOCK TABLES `vehicle_option` WRITE;
 /*!40000 ALTER TABLE `vehicle_option` DISABLE KEYS */;
+INSERT INTO `vehicle_option` VALUES (1,'Manual Airco'),(2,'Climate Control'),(3,'Digital Airco'),(4,'SRS Airbags');
 /*!40000 ALTER TABLE `vehicle_option` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,6 +525,7 @@ CREATE TABLE `vehicle_vehicle_option` (
 
 LOCK TABLES `vehicle_vehicle_option` WRITE;
 /*!40000 ALTER TABLE `vehicle_vehicle_option` DISABLE KEYS */;
+INSERT INTO `vehicle_vehicle_option` VALUES (1,2),(1,3);
 /*!40000 ALTER TABLE `vehicle_vehicle_option` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -498,4 +538,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-17 13:58:19
+-- Dump completed on 2016-05-19 16:06:33

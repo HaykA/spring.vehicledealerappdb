@@ -6,4 +6,6 @@ import com.vehicledealerapp.entities.shared.Country;
 
 public interface CountryService {
 	List<Country> findAll();
+	List<Country> findWhereEnabled();
+	List<Country> findWhereDisabled();
 }

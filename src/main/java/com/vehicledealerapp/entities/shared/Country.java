@@ -8,6 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
 
+import com.vehicledealerapp.util.RegexManager;
+import com.vehicledealerapp.util.Tools;
+
+
 @Entity
 public class Country implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,17 +20,27 @@ public class Country implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Pattern(regexp = "^\\p{L}{2,}((-|\\s)\\p{L}{2,})*$")
+	@Pattern(regexp = RegexManager.COUNTRY_REGEX)
 	private String name;
+
+	private boolean enabled;
 	
 	protected Country() {}
 	
-	public Country(String name) {
+	Country(String name) {
 		this.name = name;
 	}
 	
 	public String getName() {
-		return name;
+		return Tools.capitalize(name);
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override
@@ -53,7 +67,4 @@ public class Country implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-
 }

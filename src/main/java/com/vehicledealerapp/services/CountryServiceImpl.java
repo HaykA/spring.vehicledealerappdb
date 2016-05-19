@@ -21,5 +21,16 @@ public class CountryServiceImpl implements CountryService {
 	public List<Country> findAll() {
 		return countryDAO.findAll();
 	}
+	
+	@Override
+	public List<Country> findWhereEnabled() {
+		return countryDAO.findByEnabled(true);
+	}
+	
+	@Override
+	public List<Country> findWhereDisabled() {
+		return countryDAO.findByEnabled(false);
+	}
+	
 
 }
