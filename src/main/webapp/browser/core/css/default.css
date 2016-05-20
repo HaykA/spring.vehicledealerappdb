@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,600,600italic,700,700italic,900);
+
+ul.ul3,
+ul.ul3 ul {
+  font-family: "Titillium Web";
+  list-style-type: none;
+  padding: 0;
+}
+
+ul.ul3 ul,
+ul.ul3 dl,
+ul.ul3 dl > dd {
+  margin-left: 30px;
+}
+
+ul.ul3 > li {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+ul.ul3 > li > ul > li,
+ul.ul3 > li > ul > li > dl > dt {
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+ul.ul3 > li > ul > li > dl > dd {
+  font-size: 0.5em;
+  font-weight: 400;
+}

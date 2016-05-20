@@ -1,6 +1,6 @@
 package com.vehicledealerapp.services;
 
-import com.vehicledealerapp.entities.system.User;
+import com.vehicledealerapp.persistence.system.entities.User;
 
 public interface UserService {
 	User findByUsername(String username);

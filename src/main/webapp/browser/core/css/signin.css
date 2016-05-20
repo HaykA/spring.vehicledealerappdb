@@ -1,0 +1,179 @@
+@CHARSET "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600);
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);
+
+.navbar-signin,
+.navbar-signup {
+  background: url('../../../images/core/bg.jpg');
+  border-radius: 0;
+}
+
+.navbar-signup {
+  margin: 0;
+  min-height: 0;
+}
+
+.navbar-signin .navbar-header,
+.navbar-signup .navbar-header {
+  margin: 0;
+}
+
+#brand {
+  background-color: #fff;
+  border-radius: 10px;
+  display: table-cell;
+  float: left;
+  margin-top: 5px;
+  padding: 5px 14px;
+}
+
+#brandname a.brand {
+  vertical-align: middle;
+  font: 700 2.75em "Yanone Kaffeesatz";
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar-signin #ipt-username,
+.navbar-signin #ipt-password {
+  width: 175px;
+}
+
+.signup-body .form-group .input-group-addon {
+  border-radius: 4px 4px 0 0;
+  border: 1px solid #ccc;
+  text-align: left;
+  width: 100%;
+}
+
+.signup-body .form-group .form-control {
+  border-radius: 0 0 4px 4px;
+  margin-top: -1px;
+  width: 100%;
+}
+
+.index-body,
+.signin-body,
+.signup-body {
+  background-color: #e9eaf3;
+  padding: 5px 15px;
+}
+
+.index-body h1,
+.signup-body h1 {
+  font-family: "Titillium Web";
+  margin-top: 10px;
+}
+
+.signin-body > #signin-form {
+  margin: 50px auto;
+}
+
+.signup-body > #signup-form {
+  margin-bottom: 15px;
+}
+
+.signin-body > #signin-form .form-group {
+  margin-bottom: 10px;
+}
+
+.signin-alert,
+.signup-alert {
+  margin: 10px;
+}
+
+
+@media screen and (max-width: 480px) {
+  .navbar-signin #ipt-username,
+  .navbar-signin #ipt-password {
+    width: 100%;
+  }
+  
+  .index-body h1,
+  .signup-body h1 {
+    font-size: 10vw;
+  } 
+  
+  .signin-body > #signin-form {
+    width: 100%;    
+  }
+  
+  #brandname a.brand {
+    font-size: 2.5em;
+  }
+  
+  .signup-body .form-group {
+    width: 100%;
+  }
+  
+  
+  .g-recaptcha {
+    transform:scale(0.81);
+    transform-origin:0 0;
+  }
+}
+
+@media screen and (min-width: 479px) {
+  .signin-body > #signin-form {
+    width: 350px;
+  }
+  
+  .signup-body .form-group {
+    width: 302px;
+  }
+}
+
+@media screen and (min-width: 479px) and (max-width: 767px)  {
+  .navbar-signin #ipt-username,
+  .navbar-signin #ipt-password {
+    width: 350px;
+  }  
+  
+  .index-body h1,
+  .signup-body h1 {
+    font-size: 10vw;
+  }  
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-signin {
+	margin-bottom: 0;
+  }
+  
+  .navbar-signin .navbar-form {
+    border: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .index-body {
+    margin-top: 0;
+  }
+  
+  .index-body h1,
+  .signup-body h1 {
+    font-size: 7vw;
+  }
+}
+  
+@media screen and (min-width: 768px) {
+  #brand {
+    margin-bottom: -30px;
+    box-shadow: 0 0 5px #888888;
+  } 
+   
+  .index-body {
+    margin-top: 35px;
+  }
+  
+  .index-body h1,
+  .signup-body h1 {
+    font-size: 4em;
+  }
+}
+
+
+/* TEMP */
+.index-body {
+  height: 450px;
+}

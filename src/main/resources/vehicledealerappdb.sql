@@ -279,10 +279,10 @@ CREATE TABLE `city` (
   `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `postalcode` varchar(45) DEFAULT NULL,
-  `countryid` int(9) unsigned NOT NULL,
+  `countryid` int(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `fk_city$countryid_idx` (`countryid`),
+  KEY `fk_city$country_idx` (`countryid`),
   CONSTRAINT `fk_city$country` FOREIGN KEY (`countryid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -310,7 +310,7 @@ CREATE TABLE `continent` (
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,6 +319,7 @@ CREATE TABLE `continent` (
 
 LOCK TABLES `continent` WRITE;
 /*!40000 ALTER TABLE `continent` DISABLE KEYS */;
+INSERT INTO `continent` VALUES (1,'Asia Pasific',0),(2,'Europe',1),(3,'Latin America',0),(4,'Middle East & Africa',0),(5,'North America',0);
 /*!40000 ALTER TABLE `continent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,15 +331,15 @@ DROP TABLE IF EXISTS `country`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `country` (
-  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `continent` int(1) unsigned NOT NULL,
+  `continentid` int(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
-  KEY `fk_country$continent_idx` (`continent`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+  KEY `fk_country$continent_idx` (`continentid`)
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +348,7 @@ CREATE TABLE `country` (
 
 LOCK TABLES `country` WRITE;
 /*!40000 ALTER TABLE `country` DISABLE KEYS */;
-INSERT INTO `country` VALUES (1,'Afghanistan',0,0),(2,'Albania',0,0),(3,'Algeria',0,0),(4,'Andorra',0,0),(5,'Angola',0,0),(6,'Antigua and Barbuda',0,0),(7,'Argentina',0,0),(8,'Armenia',0,0),(9,'Australia',0,0),(10,'Austria',0,0),(11,'Azerbaijan',0,0),(12,'Bahamas',0,0),(13,'Bahrain',0,0),(14,'Bangladesh',0,0),(15,'Barbados',0,0),(16,'Belarus',0,0),(17,'Belgium',1,0),(18,'Belize',0,0),(19,'Benin',0,0),(20,'Bhutan',0,0),(21,'Bolivia',0,0),(22,'Bosnia and Herzegovina',0,0),(23,'Botswana',0,0),(24,'Brazil',0,0),(25,'Brunei',0,0),(26,'Bulgaria',0,0),(27,'Burkina Faso',0,0),(28,'Burma',0,0),(29,'Burundi',0,0),(30,'Cambodia',0,0),(31,'Cameroon',0,0),(32,'Cape Verde',0,0),(33,'Central African Republic',0,0),(34,'Chad',0,0),(35,'Chile',0,0),(36,'China',0,0),(37,'Colombia',0,0),(38,'Comoros',0,0),(39,'Congo (DRC)',0,0),(40,'Congo (Republic)',0,0),(41,'Costa Rica',0,0),(42,'Croatia',0,0),(43,'Cuba',0,0),(44,'Cyprus',0,0),(45,'Czech Republic',0,0),(46,'Denmark',0,0);
+INSERT INTO `country` VALUES (1,'Afghanistan',0,4),(2,'Albania',0,2),(3,'Algeria',0,4),(4,'Andorra',0,2),(5,'Angola',0,4),(6,'Antigua and Barbuda',0,3),(7,'Argentina',0,3),(8,'Armenia',0,2),(9,'Australia',0,1),(10,'Austria',0,2),(11,'Azerbaijan',0,2),(12,'Bahamas',0,3),(13,'Bahrain',0,4),(14,'Bangladesh',0,1),(15,'Barbados',0,3),(16,'Belarus',0,2),(17,'Belgium',1,2),(18,'Belize',0,3),(19,'Benin',0,4),(20,'Bhutan',0,1),(21,'Bolivia',0,3),(22,'Bosnia and Herzegovina',0,2),(23,'Botswana',0,4),(24,'Brazil',0,3),(25,'Brunei',0,1),(26,'Bulgaria',0,2),(27,'Burkina Faso',0,4),(29,'Burundi',0,4),(30,'Cambodia',0,1),(31,'Cameroon',0,4),(32,'Cape Verde',0,4),(33,'Central African Republic',0,4),(34,'Chad',0,4),(35,'Chile',0,3),(36,'China',0,1),(37,'Colombia',0,3),(38,'Comoros',0,4),(39,'Congo (DRC)',0,4),(40,'Congo (Republic)',0,4),(41,'Costa Rica',0,3),(42,'Croatia',0,2),(43,'Cuba',0,3),(44,'Cyprus',0,2),(45,'Czech Republic',0,2),(46,'Denmark',0,2),(47,'Djibouti',0,4),(48,'Dominica',0,3),(49,'Dominican Republic',0,3),(50,'East Timor',0,1),(51,'Ecuador',0,3),(52,'Egypt',0,4),(53,'El Salvador',0,3),(54,'Equatorial Guinea',0,4),(55,'Eritrea',0,4),(56,'Estonia',0,2),(57,'Ethiopia',0,4),(58,'Federated States of Micronesia',0,1),(59,'Fiji',0,1),(60,'Finland',0,2),(61,'France',0,2),(62,'Gabon',0,4),(63,'Gambia',0,4),(64,'Georgia',0,2),(65,'Germany',0,2),(66,'Ghana',0,4),(67,'Greece',0,2),(68,'Grenada',0,3),(69,'Guatemala',0,3),(70,'Guinea',0,4),(71,'Guinea-Bissau',0,4),(72,'Guyana',0,1),(73,'Haiti',0,3),(74,'Honduras',0,3),(75,'Hungary',0,2),(76,'Iceland',0,2),(77,'India',0,1),(78,'Indonesia',0,1),(79,'Iran',0,4),(80,'Iraq',0,4),(81,'Ireland',0,2),(82,'Israel',0,4),(83,'Italy',0,2),(84,'Ivory Coast',0,4),(85,'Jamaica',0,3),(86,'Japan',0,1),(87,'Jordan',0,4),(88,'Kazakhstan',0,1),(89,'Kenya',0,4),(90,'Kiribati',0,1),(91,'Kuwait',0,4),(92,'Kyrgyzstan',0,1),(93,'Laos',0,1),(94,'Latvia',0,2),(95,'Lebanon',0,4),(96,'Lesotho',0,4),(97,'Liberia',0,4),(98,'Libya',0,4),(99,'Liechtenstein',0,2),(100,'Lithuania',0,2),(101,'Luxembourg',0,2),(102,'Macedonia',0,2),(103,'Madagascar',0,4),(104,'Malawi',0,4),(105,'Malaysia',0,1),(106,'Maldives',0,1),(107,'Mali',0,4),(108,'Malta',0,2),(109,'Marshall Islands',0,1),(110,'Mauritania',0,4),(111,'Mauritius',0,4),(112,'Mexico',0,3),(113,'Moldova',0,2),(114,'Monaco',0,2),(115,'Mongolia',0,1),(116,'Montenegro',0,2),(117,'Morocco',0,4),(118,'Mozambique',0,4),(119,'Myanmar',0,1),(120,'Namibia',0,4),(121,'Nauru',0,1),(122,'Nepal',0,1),(123,'Netherlands',0,2),(124,'New Zealand',0,1),(125,'Nicaragua',0,3),(126,'Niger',0,4),(127,'Nigeria',0,4),(128,'North Korea',0,1),(129,'Norway',0,2),(130,'Oman',0,4),(131,'Pakistan',0,1),(132,'Palau',0,1),(133,'Palestine',0,4),(134,'Panama',0,3),(135,'Papua New Guinea',0,1),(136,'Paraguay',0,3),(137,'Peru',0,3),(138,'Philippines',0,1),(139,'Poland',0,2),(140,'Portugal',0,2),(141,'Qatar',0,4),(142,'Romania',0,2),(143,'Russia',0,2),(144,'Rwanda',0,4),(145,'Saint Kitts and Nevis',0,3),(146,'Saint Lucia',0,3),(147,'Saint Vincent and the Grenadines',0,3),(148,'Samoa',0,1),(149,'San Marino',0,2),(150,'São Tomé and Príncipe',0,4),(151,'Saudi Arabia',0,4),(152,'Senegal',0,4),(153,'Serbia',0,2),(154,'Seychelles',0,4),(155,'Sierra Leone',0,4),(156,'Singapore',0,1),(157,'Slovakia',0,2),(158,'Slovenia',0,2),(159,'Solomon Islands',0,1),(160,'Somalia',0,4),(161,'South Africa',0,4),(162,'South Korea',0,1),(163,'South Sudan',0,4),(164,'Spain',0,2),(165,'Sri Lanka',0,1),(166,'Sudan',0,4),(167,'Suriname',0,3),(168,'Swaziland',0,4),(169,'Sweden',0,2),(170,'Switzerland',0,2),(171,'Syria',0,4),(172,'Tajikistan',0,1),(173,'Tanzania',0,4),(174,'Thailand',0,1),(175,'Togo',0,4),(176,'Tonga',0,1),(177,'Trinidad and Tobago',0,3),(178,'Tunisia',0,4),(179,'Turkey',0,2),(180,'Turkmenistan',0,1),(181,'Tuvalu',0,1),(182,'Uganda',0,4),(183,'Ukraine',0,2),(184,'United Arab Emirates',0,4),(185,'United Kingdom',0,2),(186,'United States',0,5),(187,'Uruguay',0,3),(188,'Uzbekistan',0,1),(189,'Vanuatu',0,1),(190,'Vatican City',0,1),(191,'Venezuela',0,3),(192,'Vietnam',0,1),(193,'Yemen',0,4),(194,'Zambia',0,4),(195,'Zimbabwe',0,4),(196,'Canada',0,5);
 /*!40000 ALTER TABLE `country` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -538,4 +539,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-19 16:06:33
+-- Dump completed on 2016-05-20 16:13:31

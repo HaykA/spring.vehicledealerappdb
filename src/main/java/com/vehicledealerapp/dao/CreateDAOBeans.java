@@ -12,6 +12,12 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import com.vehicledealerapp.persistence.general.entities.PackageGeneralEntities;
+import com.vehicledealerapp.persistence.general.valueobjects.PackageGeneralValueObjects;
+import com.vehicledealerapp.persistence.shared.entities.PackageSharedEntities;
+import com.vehicledealerapp.persistence.subject.entities.PackageSubjectEntities;
+import com.vehicledealerapp.persistence.system.entities.PackageSystemEntities;
+
 @Configuration
 @EnableJpaRepositories
 public class CreateDAOBeans {
@@ -25,10 +31,11 @@ public class CreateDAOBeans {
 			= new LocalContainerEntityManagerFactoryBean();
 		factory.setDataSource(dataSource);
 		factory.setPackagesToScan(
-				"com.vehicledealerapp.entities.shared",
-				"com.vehicledealerapp.entities.subject",
-				"com.vehicledealerapp.entities.system",
-				"com.vehicledealerapp.entities.valueobjects");
+				PackageGeneralEntities.getName(),
+				PackageSharedEntities.getName(),
+				PackageSubjectEntities.getName(),
+				PackageSystemEntities.getName(),
+				PackageGeneralValueObjects.getName());
 		
 		HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 		adapter.setShowSql(true);

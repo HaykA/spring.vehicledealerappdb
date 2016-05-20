@@ -3,20 +3,74 @@
 <%-- JSTL-taglibs --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%-- Custom-taglibs --%>
+<%@taglib prefix="vdapp" uri="http://vdapp.com/core/tags"%>
+<%@taglib prefix="bs" uri="http://bootstrap.com/tags"%>
+
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
+
+  <head>
+    <vdapp:head title="Hello World"></vdapp:head>
+  </head>
+  
 <body>
-	<h1>Hello World!</h1>
-	
-	<h2>Countries</h2>
-	<ul>
-	<c:forEach var="country" items="${countries}">
-	<li>${country.name}</li>	
+  <ul class="ul3">
+    <li>Enabled Continents</li>
+    <c:forEach var="continent" items="${enabledContinents}">
+    <li>
+      <ul>
+        <li>${continent.name}</li>
+        <li>
+          <dl>
+            <dt>Enabled Countries</dt>
+            
+            <c:forEach var="country" items="${continent.enabledCountries}">
+            <dd>${country.name}</dd>
+            </c:forEach>
+            <c:if test="${empty continent.enabledCountries}">
+            <dd>(empty)</dd>
+            </c:if>
+            <dt>Disabled Countries</dt>
+            <c:forEach var="country" items="${continent.disabledCountries}">
+            <dd>${country.name}</dd>
+            </c:forEach>
+            <c:if test="${empty continent.disabledCountries}">
+            <dd>(empty)</dd>
+            </c:if>
+          </dl>
+        </li>
+      </ul>
+    </li>
 	</c:forEach>
-	</ul>
+
+    <li>Disabled Continents</li>
+    <c:forEach var="continent" items="${disabledContinents}">
+    <li>
+      <ul>
+        <li>${continent.name}</li>
+        <li>
+          <dl>
+            <dt>Enabled Countries</dt>
+            <c:forEach var="country" items="${continent.enabledCountries}">
+            <dd>${country.name}</dd>
+            </c:forEach>
+            <c:if test="${empty continent.enabledCountries}">
+            <dd>(empty)</dd>
+            </c:if>
+            <dt>Disabled Countries</dt>
+            <c:forEach var="country" items="${continent.disabledCountries}">
+            <dd>${country.name}</dd>
+            </c:forEach>
+            <c:if test="${empty continent.disabledCountries}">
+            <dd>(empty)</dd>
+            </c:if>
+          </dl>
+        </li>
+      </ul>
+    </li>
+  </c:forEach>
+  </ul>
+
 </body>
 </html>

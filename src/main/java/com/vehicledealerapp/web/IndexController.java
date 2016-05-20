@@ -11,22 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.vehicledealerapp.services.CountryService;
+import com.vehicledealerapp.services.LocaleService;
 
 @Controller
 @RequestMapping(ROOT)
 class IndexController {
 		
-	private final CountryService countryService;
+	private final LocaleService localeService;
 	
 	@Autowired
-	IndexController(CountryService countryService) {
-		this.countryService = countryService;
+	IndexController(LocaleService countryService) {
+		this.localeService = countryService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	ModelAndView index(Locale locale) {
 		return new ModelAndView(INDEX,
-			"countries", countryService.findWhereEnabled());
+			"enabledContinents", localeService.findEnabledContinents())
+				.addObject("disabledContinents", localeService.findDisabledContinents());
 	}
 }
