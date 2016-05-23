@@ -20,8 +20,8 @@ class IndexController {
 	private final LocaleService localeService;
 	
 	@Autowired
-	IndexController(LocaleService countryService) {
-		this.localeService = countryService;
+	IndexController(LocaleService localeService) {
+		this.localeService = localeService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)

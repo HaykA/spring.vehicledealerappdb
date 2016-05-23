@@ -62,7 +62,7 @@ public class LocaleServiceImpl implements LocaleService {
 	
 	@ModifyingTransactionalServiceMethod
 	public void update(Country country) {
-		countryDAO.update(country);
+		countryDAO.save(country);
 	}
 
 	@ModifyingTransactionalServiceMethod
