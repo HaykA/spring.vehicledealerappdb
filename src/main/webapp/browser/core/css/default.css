@@ -30,3 +30,40 @@ ul.ul3 > li > ul > li > dl > dd {
   font-size: 0.5em;
   font-weight: 400;
 }
+
+.custom-row {
+  margin: 5px
+}
+
+input[type='checkbox'].medium {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin: 0;
+}
+
+
+label.medium {
+  font: 400 22px "Titillium Web";
+  vertical-align: middle;
+  margin: 0;
+  margin-bottom: 2px;
+}
+
+h1 {
+  font: 700 3.5em "Titillium Web";
+}
+
+div.frame-container {
+  display: block;
+  overflow: auto;
+  height: 50vh;
+  width: 100;
+  
+  box-shadow: 0 0 5px #79a6d2;
+  
+}
+
+div.toolset {
+  margin: 10px auto;
+}

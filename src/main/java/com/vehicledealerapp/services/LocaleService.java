@@ -7,10 +7,7 @@ import com.vehicledealerapp.persistence.shared.entities.Country;
 
 public interface LocaleService {
 	List<Continent> findAllContinents();
-	List<Continent> findEnabledContinents();
-	List<Continent> findDisabledContinents();
 	List<Country> findAllCountries();
 	List<Country> findEnabledCountries();
-	List<Country> findDisabledCountries();
-	void executeMaintenance();
+	void updateContinent(Continent continent);
 }

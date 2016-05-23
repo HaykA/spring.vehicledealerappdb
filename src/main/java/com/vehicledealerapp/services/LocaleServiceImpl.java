@@ -1,8 +1,6 @@
 package com.vehicledealerapp.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,17 +27,6 @@ public class LocaleServiceImpl implements LocaleService {
 		return continentDAO.findAll();
 	}
 	
-
-	@Override
-	public List<Continent> findEnabledContinents() {
-		return continentDAO.findByEnabled(true);
-	}
-
-	@Override
-	public List<Continent> findDisabledContinents() {
-		return continentDAO.findByEnabled(false);
-	}
-	
 	@Override
 	public List<Country> findAllCountries() {
 		return countryDAO.findAll();
@@ -51,29 +38,10 @@ public class LocaleServiceImpl implements LocaleService {
 	}
 	
 	@Override
-	public List<Country> findDisabledCountries() {
-		return countryDAO.findByEnabled(false);
-	}
-	
 	@ModifyingTransactionalServiceMethod
-	public void deleteAll() {
-		countryDAO.deleteAll();
-	}
-	
-	@ModifyingTransactionalServiceMethod
-	public void update(Country country) {
-		countryDAO.save(country);
+	public void updateContinent(Continent continent) {
+		continentDAO.save(continent);
 	}
 
-	@ModifyingTransactionalServiceMethod
-	@Override
-	public void executeMaintenance() {
-		List<Country> countries
-			= new ArrayList<>(new TreeSet<>(findAllCountries()));
-		deleteAll();
-		for (int i = 0; i < countries.size(); i++) {
-			countries.get(i).setId(i + 1);
-			update(countries.get(i));
-		}
-	}
+
 }

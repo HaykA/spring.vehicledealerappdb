@@ -1,7 +1,8 @@
 package com.vehicledealerapp.persistence.shared.entities;
 
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -29,12 +30,20 @@ public class Continent implements Serializable, Comparable<Continent> {
 	
 	protected Continent() {}
 	
+	public long getId() {
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
 	
 	public Set<Country> getCountries() {
-		return Collections.unmodifiableSet(countries);
+		return new TreeSet<>(countries);
+	}
+	
+	public void setCountries(Set<Country> countries) {
+		this.countries = countries;
 	}
 	
 	public boolean isEnabled() {

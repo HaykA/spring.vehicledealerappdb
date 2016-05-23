@@ -12,10 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Pattern;
 
 import com.vehicledealerapp.persistence.general.entities.City;
-import com.vehicledealerapp.util.RegexManager;
 
 @Entity
 public class Country implements Serializable, Comparable<Country> {
@@ -25,7 +23,6 @@ public class Country implements Serializable, Comparable<Country> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Pattern(regexp = RegexManager.COUNTRY_REGEX)
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,12 +36,12 @@ public class Country implements Serializable, Comparable<Country> {
 	
 	protected Country() {}
 	
-	public String getName() {
-		return name;
+	public long getId() {
+		return id;
 	}
 	
-	public void setId(long id) {
-		this.id = id;
+	public String getName() {
+		return name;
 	}
 	
 	public boolean isEnabled() {
