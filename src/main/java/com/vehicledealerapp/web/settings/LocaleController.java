@@ -1,11 +1,14 @@
 package com.vehicledealerapp.web.settings;
 
+import static com.vehicledealerapp.util.InternalResourceResolver.CONTINENT;
 import static com.vehicledealerapp.util.InternalResourceResolver.CONTINENTS;
-import static com.vehicledealerapp.util.InternalResourceResolver.COUNTRIES;
 import static com.vehicledealerapp.util.InternalResourceResolver._CONTINENTS;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,12 +45,12 @@ public class LocaleController {
 	
 	@RequestMapping(path="{continent}", method = RequestMethod.GET)
 	ModelAndView readContinent(@PathVariable Continent continent) {
-		return new ModelAndView(COUNTRIES,
+		return new ModelAndView(CONTINENT,
 				Attributes.CONTINENT, continent);
 	}
 	
 	@RequestMapping(path="{continent}", method = RequestMethod.POST)
-	String editContinent(@PathVariable Continent continent) {
+	String editContinent(@Valid Continent continent, BindingResult bindingResult) {
 		localeService.updateContinent(continent);
 		return InternalResourceResolver.redirectTo(CONTINENTS);
 	}

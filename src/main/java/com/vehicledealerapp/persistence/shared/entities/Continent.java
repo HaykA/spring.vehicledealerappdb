@@ -1,7 +1,7 @@
 package com.vehicledealerapp.persistence.shared.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Continent implements Serializable, Comparable<Continent> {
+public class Continent implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -24,9 +24,7 @@ public class Continent implements Serializable, Comparable<Continent> {
 	private String name;
 	
 	@OneToMany(mappedBy = "continent")
-	private Set<Country> countries;
-	
-	private boolean enabled;
+	private List<Country> countries;
 	
 	protected Continent() {}
 	
@@ -38,16 +36,8 @@ public class Continent implements Serializable, Comparable<Continent> {
 		return name;
 	}
 	
-	public Set<Country> getCountries() {
-		return new TreeSet<>(countries);
-	}
-	
-	public void setCountries(Set<Country> countries) {
-		this.countries = countries;
-	}
-	
-	public boolean isEnabled() {
-		return enabled;
+	public List<Country> getCountries() {
+		return Collections.unmodifiableList(countries);
 	}
 	
 	public Set<Country> getEnabledCountries() {
@@ -84,12 +74,4 @@ public class Continent implements Serializable, Comparable<Continent> {
 			return false;
 		return true;
 	}
-
-	@Override
-	public int compareTo(Continent continent) {
-		return name.compareToIgnoreCase(continent.name);
-	}
-	
-	
-
 }

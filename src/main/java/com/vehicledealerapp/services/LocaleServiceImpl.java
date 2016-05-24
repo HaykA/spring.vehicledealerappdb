@@ -28,11 +28,6 @@ public class LocaleServiceImpl implements LocaleService {
 	}
 	
 	@Override
-	public List<Country> findAllCountries() {
-		return countryDAO.findAll();
-	}
-	
-	@Override
 	public List<Country> findEnabledCountries() {
 		return countryDAO.findByEnabled(true);
 	}
@@ -40,8 +35,7 @@ public class LocaleServiceImpl implements LocaleService {
 	@Override
 	@ModifyingTransactionalServiceMethod
 	public void updateContinent(Continent continent) {
-		continentDAO.save(continent);
+		System.out.println("Saving continent");
+		continentDAO.saveAndFlush(continent);
 	}
-
-
 }

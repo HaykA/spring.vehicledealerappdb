@@ -43,11 +43,12 @@ input[type='checkbox'].medium {
 }
 
 
-label.medium {
+div.frame-container label {
   font: 400 22px "Titillium Web";
   vertical-align: middle;
   margin: 0;
   margin-bottom: 2px;
+  text-indent: 8px;
 }
 
 h1 {
@@ -59,7 +60,7 @@ div.frame-container {
   overflow: auto;
   height: 50vh;
   width: 100;
-  
+  padding: 8px 14px;
   box-shadow: 0 0 5px #79a6d2;
   
 }

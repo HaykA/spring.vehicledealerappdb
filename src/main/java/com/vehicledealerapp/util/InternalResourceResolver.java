@@ -12,7 +12,7 @@ public final class InternalResourceResolver {
 	private static final String LOCALE = SETTINGS + "locale/";
 	public static final String CONTINENTS = LOCALE + "continents";
 	public static final String _CONTINENTS = ROOT + CONTINENTS;
-	public static final String COUNTRIES = LOCALE + "/countries";
+	public static final String CONTINENT = LOCALE + "continent";
 	
 	private static final String REDIRECT = "redirect:/";
 	

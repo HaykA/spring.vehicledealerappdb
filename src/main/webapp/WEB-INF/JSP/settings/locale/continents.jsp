@@ -15,37 +15,28 @@
   </head>
   
 <body>
-  <c:forEach var="continent" items="${continents}">
+  
     <c:choose>
-      <c:when test="${continent.enabled}">
-        <c:set var="enableBtnStyle" value='danger'/>
-        <c:set var="enableBtnIcon" value='pause'/>
-        <c:url var="continentUrl" value='/settings/locale/continents/${continent.id}'/>
-      </c:when>
-          
-      <c:otherwise>
-        <c:set var="enableBtnStyle" value="success"/>
-        <c:set var="enableBtnIcon" value="play"/>
-        <c:set var="showBtnHref" value=''/>
-      </c:otherwise>
-    </c:choose>
-        
-  <div class="row custom-row">
-    <div class="col-lg-4">
-      <div class="input-group">
-        <span class="input-group-btn">
-          <button type="submit" class="btn btn-lg btn-${enableBtnStyle}">
-            <bs:gi icon="${enableBtnIcon}"/></button>
-        </span>
-        <a href="${continentUrl}" class="btn btn-lg btn-default form-control input-lg">
-            ${continent.name}</a>
+
+    <c:when test="${not empty continents}">
+    <div class="container-fluid">
+      <h1>Continents</h1>
+      <div class="list-group">
+        <c:forEach var="continent" items="${continents}">
+        <a href="<c:url value='/settings/locale/continents/${continent.id}'/>"
+          class="list-group-item">${continent.name}</a>
+        </c:forEach>
       </div>
     </div>
-  </div>
-  </c:forEach>
+    </c:when>
     
-
+    <c:otherwise>
+      <div class="container-fluid">
+        <h1>No continents found</h1>
+      </div>
+    </c:otherwise>
+    </c:choose>
   
-
+  
 </body>
 </html>

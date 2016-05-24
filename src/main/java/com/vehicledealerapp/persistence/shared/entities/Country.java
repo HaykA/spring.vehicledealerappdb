@@ -3,6 +3,7 @@ package com.vehicledealerapp.persistence.shared.entities;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Country implements Serializable, Comparable<Country> {
 	private boolean enabled;
 	
 	@OneToMany(mappedBy = "country")
-	private Set<City> cities;
+	private Set<City> cities = new TreeSet<>();
 	
 	protected Country() {}
 	
@@ -88,6 +89,7 @@ public class Country implements Serializable, Comparable<Country> {
 			return false;
 		return true;
 	}
+
 
 	@Override
 	public int compareTo(Country country) {
