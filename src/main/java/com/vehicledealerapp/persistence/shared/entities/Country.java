@@ -12,14 +12,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 
 import com.vehicledealerapp.persistence.general.entities.City;
 
 @Entity
+@NamedEntityGraph(name = Country.WITH_CONTINENT,
+attributeNodes = @NamedAttributeNode("continent"))
 public class Country implements Serializable, Comparable<Country> {
 	private static final long serialVersionUID = 1L;
 	
+	public static final String WITH_CONTINENT = "Country.withContinent";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -59,10 +64,6 @@ public class Country implements Serializable, Comparable<Country> {
 	
 	public boolean addCity(City city) {
 		return (!cities.contains(city)) ? cities.add(city) : false;
-	}
-	
-	boolean isDisabled() {
-		return !isEnabled();
 	}
 
 	@Override
