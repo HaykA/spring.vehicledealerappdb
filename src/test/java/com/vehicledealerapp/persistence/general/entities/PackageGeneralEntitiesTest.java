@@ -11,4 +11,16 @@ public class PackageGeneralEntitiesTest {
 		assertEquals(PackageGeneralEntities.getName(),
 				this.getClass().getPackage().getName());
 	}
+	
+	@Test
+	public void city_class_belongs_to_general_entities_package() {
+		assertEquals(PackageGeneralEntities.getName(),
+				City.class.getPackage().getName());
+	}
+	
+	@Test
+	public void street_class_belongs_to_general_entities_package() {
+		assertEquals(PackageGeneralEntities.getName(),
+				Street.class.getPackage().getName());
+	}
 }

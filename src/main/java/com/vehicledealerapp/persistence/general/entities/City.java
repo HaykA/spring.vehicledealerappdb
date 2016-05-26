@@ -1,6 +1,8 @@
 package com.vehicledealerapp.persistence.general.entities;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.vehicledealerapp.persistence.shared.entities.Country;
 
@@ -31,6 +34,9 @@ public class City implements Serializable {
 	@JoinColumn(name = "countryid")
 	private Country country;
 	
+	@OneToMany(mappedBy = "city")
+	private Set<Street> streets;
+	
 	protected City() {}
 	
 	public long getId() {
@@ -45,10 +51,24 @@ public class City implements Serializable {
 		return postalCode;
 	}
 	
+	public Set<Street> getStreets() {
+		return Collections.unmodifiableSet(streets);
+	}
+	
 	public Country getCountry() {
 		return country;
 	}
 
+	public String getPostalCodeAndName() {
+		return '(' + postalCode + ") " + name;
+	}
+	
+	public String getPostalCodeNameAndCountry() {
+		return postalCode + ' ' + name + ", " + country.getName();
+	}
+	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

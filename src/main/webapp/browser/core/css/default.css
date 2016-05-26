@@ -55,6 +55,11 @@ h1 {
   font: 700 3.5em "Titillium Web";
 }
 
+h3 {
+  font: 700 2em "Titillium Web";
+}
+
+
 div.frame-container {
   display: block;
   overflow: auto;

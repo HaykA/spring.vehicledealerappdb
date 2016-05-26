@@ -15,62 +15,7 @@
   </head>
   
 <body>
-  <ul class="ul3">
-    <li>Enabled Continents</li>
-    <c:forEach var="continent" items="${enabledContinents}">
-    <li>
-      <ul>
-        <li>${continent.name}</li>
-        <li>
-          <dl>
-            <dt>Enabled Countries</dt>
-            
-            <c:forEach var="country" items="${continent.enabledCountries}">
-            <dd>${country.name}</dd>
-            </c:forEach>
-            <c:if test="${empty continent.enabledCountries}">
-            <dd>(empty)</dd>
-            </c:if>
-            <dt>Disabled Countries</dt>
-            <c:forEach var="country" items="${continent.disabledCountries}">
-            <dd>${country.name}</dd>
-            </c:forEach>
-            <c:if test="${empty continent.disabledCountries}">
-            <dd>(empty)</dd>
-            </c:if>
-          </dl>
-        </li>
-      </ul>
-    </li>
-	</c:forEach>
-
-    <li>Disabled Continents</li>
-    <c:forEach var="continent" items="${disabledContinents}">
-    <li>
-      <ul>
-        <li>${continent.name}</li>
-        <li>
-          <dl>
-            <dt>Enabled Countries</dt>
-            <c:forEach var="country" items="${continent.enabledCountries}">
-            <dd>${country.name}</dd>
-            </c:forEach>
-            <c:if test="${empty continent.enabledCountries}">
-            <dd>(empty)</dd>
-            </c:if>
-            <dt>Disabled Countries</dt>
-            <c:forEach var="country" items="${continent.disabledCountries}">
-            <dd>${country.name}</dd>
-            </c:forEach>
-            <c:if test="${empty continent.disabledCountries}">
-            <dd>(empty)</dd>
-            </c:if>
-          </dl>
-        </li>
-      </ul>
-    </li>
-  </c:forEach>
-  </ul>
+  <vdapp:header/>
 
 </body>
 </html>

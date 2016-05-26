@@ -12,9 +12,6 @@ public interface CountryDAO  extends JpaRepository<Country, Long> {
 	@EntityGraph(Country.WITH_CONTINENT)
 	List<Country> findByEnabled(boolean enabled);
 	
-	/*
 	@EntityGraph(Country.WITH_CONTINENT)
-	List<Country> findByCityIsNotNull();*/
-	
-	List<Country> findByEnabledOrCitiesNotNull(boolean enabled);
+	List<Country> findDistinctByEnabledOrCitiesNotNull(boolean enabled);
 }

@@ -11,8 +11,7 @@ import com.vehicledealerapp.persistence.general.entities.City;
 import com.vehicledealerapp.persistence.shared.entities.Country;
 
 
-public interface CityDAO  extends JpaRepository<City, Long> {
-	
+public interface CityDAO extends JpaRepository<City, Long> {
 	
 	@EntityGraph(City.WITH_COUNTRY)
 	List<City> findByCountry(Country country);
