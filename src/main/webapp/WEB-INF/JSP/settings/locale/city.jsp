@@ -21,16 +21,14 @@
     </header>
     
     <%-- Breadcrumb --%>
-    <div class="container-fluid">
-      <ol class="breadcrumb">
-        <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
-        <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-        <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-        <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
-        <li><a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>">${city.country.name}</a></li>
-        <li class="active">${city.postalCodeAndName}</li>
-      </ol>
-    </div>
+    <ol class="breadcrumb">
+      <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
+      <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
+      <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
+      <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
+      <li><a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>">${city.country.name}</a></li>
+      <li class="active">${city.postalCodeAndName}</li>
+    </ol>
     
     <c:choose>
 
@@ -43,27 +41,42 @@
     
     <div class="container-fluid">
       <div class="toolset">
-        <a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>" class="btn btn-default"><i class="fa fa-reply"></i> Cancel</a>
         <a href="<c:url value='/settings/locale/cities/${city.id}/streets'/>" class="btn btn-primary"><bs:fa icon="edit"/> Edit Streets...</a>
+        <button id="btn-remove" type="submit" class="btn btn-danger" role="disableOnSubmit">
+          <bs:fa icon="trash"/> Remove</button>
       </div>
     </div>
     
     <div class="container-fluid">
       
-      <select id="select-country" name="country" class="form-control">
-        <option value="">- Select country -</option>
-        <c:forEach var="availableCountry" items="${countries}">
-        <option value="${availableCountry.id}"<c:if test="${not empty city.country and availableCountry.id == city.country.id}"> selected</c:if>>${availableCountry.name}</option>
-        </c:forEach>
-      </select>
-      
-      <input type="text" class="form-control" placeholder="Name" value="${city.name}"/>
-      <input type="text" class="form-control" placeholder="Postal Code" value="${city.postalCode}"/>
+      <div class="col-sm-12 row">
+        <div class="col-sm-6 row">
+          <select id="select-country" name="country" class="form-control">
+            <option value="">- Select country -</option>
+            <c:forEach var="availableCountry" items="${countries}">
+            <option value="${availableCountry.id}"<c:if test="${not empty city.country and availableCountry.id == city.country.id}"> selected</c:if>>${availableCountry.name}</option>
+            </c:forEach>
+          </select><br>
+        </div>
+      </div>
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-6 row">
+          <input type="text" class="form-control" placeholder="Name" value="${city.name}"/><br>
+        </div>
+      </div>
+
+      <div class="col-sm-12 row">
+        <div class="col-sm-6 row">
+          <input type="text" class="form-control" placeholder="Postal Code" value="${city.postalCode}"/>
+      	</div>
+      </div>
     </div>
 
     <div class="container-fluid">
       <div class="toolset">
         <button type="submit" class="btn btn-lg btn-info"><i class="fa fa-save"></i> Save</button>
+        <a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>" class="btn btn-lg btn-default"><i class="fa fa-remove"></i> Cancel</a>
       </div>
     </div>
     

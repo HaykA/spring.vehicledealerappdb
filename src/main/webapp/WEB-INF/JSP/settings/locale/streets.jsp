@@ -21,15 +21,19 @@
     </header>
     
     <%-- Breadcrumb --%>
+    <ol class="breadcrumb">
+      <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
+      <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
+      <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
+      <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
+      <li><a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>">${city.country.name}</a></li>
+      <li class="active">${city.postalCodeAndName}</li>
+    </ol>
+    
+        
     <div class="container-fluid">
-      <ol class="breadcrumb">
-        <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
-        <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-        <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-        <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
-        <li><a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>">${city.country.name}</a></li>
-        <li class="active">${city.postalCodeAndName}</li>
-      </ol>
+      <a href="<c:url value='/settings/locale/cities/${city.id}'/>" class="btn btn-default">
+        <i class="fa fa-arrow-circle-left"></i> Return</a>
     </div>
     
     <div class="container-fluid">
@@ -40,12 +44,13 @@
         </h1>
     </div>
     
-    
+    <form method="post">
     <div class="container-fluid">
       <div class="toolset">
-        <button type="button" class="btn btn-primary">Select All</button>
-        <button type="button" class="btn btn-primary">Unselect All</button>
-        <button type="submit" class="btn btn-danger"><bs:fa icon="remove"/> Remove selected</button>
+        <button id="btn-selectAll" type="button" class="btn btn-default" role="selector">
+          <i class="fa fa-square-o fa-fw"></i> Select All</button>
+        <button id="btn-removeSelected" type="submit" class="btn btn-danger" disabled role="disableOnSubmit">
+          <bs:fa icon="trash"/> Remove selected</button>
         <a href="#" class="btn btn-success"><bs:fa icon="asterisk"/> New Street</a>
       </div>
     </div>
@@ -68,6 +73,12 @@
         </c:choose>
       </div>
     </div>
-
+    </form>
+    
+    <script type="text/javascript">
+      handleSelectAllFunction('btn-selectAll', 'street', 'Select All', 'Unselect All', true, true);
+      handleControlEnabled('btn-removeSelected', 'street', true);
+    </script>
+    
   </body>
 </html>

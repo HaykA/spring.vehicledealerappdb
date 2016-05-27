@@ -24,15 +24,13 @@
     </header>
     
     <%-- Breadcrumb --%>
-    <div class="container-fluid">
-      <ol class="breadcrumb">
-        <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
-        <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-        <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-        <li><a href="<c:url value='/settings/locale/continents'/>" data-toggle="tooltip" title="Continents">Continents</a></li>
-        <li class="active">${continent.name}</li>
-      </ol>
-    </div>
+    <ol class="breadcrumb">
+      <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
+      <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
+      <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
+      <li><a href="<c:url value='/settings/locale/continents'/>" data-toggle="tooltip" title="Continents">Enable/Disable Countries</a></li>
+      <li class="active">${continent.name}</li>
+    </ol>
 
     <c:choose>
     
@@ -41,9 +39,8 @@
       <div class="container-fluid">
         <h1>${continent.name}</h1>
         <div class="toolset">
-          <a href="<c:url value='/settings/locale/continents'/>" class="btn btn-default"><i class="fa fa-reply"></i> Cancel</a>
-          <button type="button" class="btn btn-primary">Select All</button>
-          <button type="button" class="btn btn-primary">Unselect All</button>
+          <button id="btn-selectAll" type="button" class="btn btn-default" role="selector">
+            <i class="fa fa-square-o fa-fw"></i> Select All</button>
 	   </div>
       </div>
     
@@ -58,7 +55,9 @@
   
       <div class="container-fluid">
         <div class="toolset">
-          <button type="submit" class="btn btn-lg btn-info"><i class="fa fa-save"></i> Save</button>
+          <button type="submit" class="btn btn-lg btn-info" role="disableOnSubmit"><i class="fa fa-save"></i> Save</button>
+          <a href="/vehicledealerapp/settings/locale/continents" class="btn btn-lg btn-default">
+            <i class="fa fa-remove"></i> Cancel</a>
         </div>
       </div>
     </form:form>
@@ -72,5 +71,9 @@
     
     </c:choose>
   
+    <script type="text/javascript">
+    	handleSelectAllFunctionForSlaveContainingName('btn-selectAll', 'countries', 'Select All', 'Unselect All', true, true);
+    </script>
+    
   </body>
 </html>

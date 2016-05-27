@@ -21,32 +21,35 @@
     </header>
     
     <%-- Breadcrumb --%>
+    <ol class="breadcrumb">
+      <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
+      <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
+      <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
+        
+      <c:choose>
+      <c:when test="${not empty country}">
+      <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
+      <li class="active">${country.name}</li>
+      </c:when>
+        
+      <c:otherwise>
+      <li class="active">Edit Cities</li>
+      </c:otherwise>
+      </c:choose>
+    </ol>
+    
     <div class="container-fluid">
-      <ol class="breadcrumb">
-        <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
-        <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-        <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-        
-        <c:choose>
-        <c:when test="${not empty country}">
-        <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
-        <li class="active">${country.name}</li>
-        </c:when>
-        
-        <c:otherwise>
-        <li class="active">Edit Cities</li>
-        </c:otherwise>
-        </c:choose>
-      </ol>
+      <a href="<c:url value='/settings/locale'/>" class="btn btn-default">
+        <i class="fa fa-arrow-circle-left"></i> Return</a>
     </div>
     
     <c:choose>
 
     <c:when test="${not empty countries}">
     <div class="container-fluid">
-      <h1>Cities
+      <h1>Cities in:
         <c:if test="${not empty country}">
-        :<span class="small"> ${country.name}</span>
+        <span class="small"> ${country.name}</span>
         </c:if>
         </h1>
       
@@ -60,13 +63,14 @@
       </form>
     </div>
     
-    
+    <form method="post">
     <c:if test="${not empty country}">
     <div class="container-fluid">
       <div class="toolset">
-        <button type="button" class="btn btn-primary">Select All</button>
-        <button type="button" class="btn btn-primary">Unselect All</button>
-        <button type="submit" class="btn btn-danger"><bs:fa icon="remove"/> Remove selected</button>
+        <button id="btn-selectAll" type="button" class="btn btn-default" role="selector">
+          <i class="fa fa-square-o fa-fw"></i> Select All</button>
+        <button id="btn-removeSelected" type="submit" class="btn btn-danger" disabled role="disableOnSubmit">
+          <bs:fa icon="trash"/> Remove selected</button>
         <a href="#" class="btn btn-success"><bs:fa icon="asterisk"/> New City</a>
       </div>
     </div>
@@ -90,6 +94,7 @@
       </div>
     </div>
     </c:if>
+    </form>
     </c:when>
     
     <c:otherwise>
@@ -98,12 +103,11 @@
       </div>
     </c:otherwise>
     </c:choose>
+    
     <script type="text/javascript">
-    $(document).ready(function () {
-        $("select").each(function () {
-            $(this).val($(this).find('option[selected]').val());
-        });
-    })
+    	handleSelectAllFunction('btn-selectAll', 'city', 'Select All', 'Unselect All', true, true);
+    	handleControlEnabled('btn-removeSelected', 'city', true);
     </script>
+    
   </body>
 </html>

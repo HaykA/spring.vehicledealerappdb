@@ -1,6 +1,6 @@
 package com.vehicledealerapp.web.settings;
 
-import static com.vehicledealerapp.util.ResourceResolver.View.redirectTo;
+import static com.vehicledealerapp.web.util.ResourceResolver.View.redirectTo;
 
 import javax.validation.Valid;
 
@@ -19,10 +19,10 @@ import com.vehicledealerapp.persistence.general.entities.Street;
 import com.vehicledealerapp.persistence.shared.entities.Continent;
 import com.vehicledealerapp.persistence.shared.entities.Country;
 import com.vehicledealerapp.services.LocaleService;
-import com.vehicledealerapp.util.ResourceResolver.Attribute;
-import com.vehicledealerapp.util.ResourceResolver.Mapping;
-import com.vehicledealerapp.util.ResourceResolver.Path;
-import com.vehicledealerapp.util.ResourceResolver.View;
+import com.vehicledealerapp.web.util.ResourceResolver.Attribute;
+import com.vehicledealerapp.web.util.ResourceResolver.Mapping;
+import com.vehicledealerapp.web.util.ResourceResolver.Path;
+import com.vehicledealerapp.web.util.ResourceResolver.View;
 @Controller
 @RequestMapping(Mapping.SETTINGS_LOCALE)
 public class LocaleSettingsController {
@@ -37,6 +37,15 @@ public class LocaleSettingsController {
 	@InitBinder(Attribute.CONTINENT)
 	void initBinderContinent(WebDataBinder binder) {
 		binder.initDirectFieldAccess();
+	}
+	
+	/**
+	 * doGet continents - Forwards continents.jsp
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	String localeSettings() {
+		return View.SETTINGS_LOCALE;
 	}
 	
 	/**

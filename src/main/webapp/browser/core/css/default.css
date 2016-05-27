@@ -73,3 +73,40 @@ div.frame-container {
 div.toolset {
   margin: 10px auto;
 }
+
+header > nav {
+  height: 58px;
+}
+
+header .navbar-nav > li > a {
+  padding-top: 19px;
+  padding-bottom: 19px;
+  
+}
+
+header .navbar-nav > li > a.bigger-icon {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 58px;
+}
+
+header .navbar-inverse .navbar-nav>li>a {
+    color: #d6d6d6;
+}
+
+
+header .navbar-inverse .navbar-nav>li>a:hover,
+header .navbar-inverse .navbar-nav>li>a:focus,
+header .navbar-inverse .navbar-nav>.open>a,
+header .navbar-inverse .navbar-nav>.open>a:hover,
+header .navbar-inverse .navbar-nav>.open>a:focus {
+  background-color: #666;
+}
+
+
+header .navbar-header .navbar-brand {
+  height: 58px;
+  padding-top: 12px;
+  padding-bottom: 18px
+  
+}

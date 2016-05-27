@@ -1,7 +1,7 @@
 <%@tag language="java" description="header" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav id="main-navigation">
+<nav id="main-navigation" class="navbar-inverse">
 <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -11,21 +11,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="<c:url value='/'/>" class="navbar-brand">Brand</a>
+      <a href="<c:url value='/'/>" class="navbar-brand"><i class="fa fa-car fa-2x"></i></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Locale Settings<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="<c:url value='/settings/locale/continents'/>">Enable/Disable Countries</a></li>
-            <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">- no action yet -</a></li>
-          </ul>
-        </li>
+        <li><a href="#">Link</a></li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -38,6 +30,15 @@
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="bigger-icon" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear fa-2x"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="<c:url value='/settings/locale'/>"><i class="fa fa-globe fa-fw"></i> Locale Settings</a></li>
+            <li><a href="<c:url value='/settings/branches'/>"><i class="fa fa-building fa-fw"></i> Branches</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="<c:url value='/settings/persons'/>"><i class="fa fa-user fa-fw"></i> Persons and Users</a></li>
           </ul>
         </li>
       </ul>

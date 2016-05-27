@@ -1,4 +1,4 @@
-package com.vehicledealerapp.util;
+package com.vehicledealerapp.web.util;
 
 public final class ResourceResolver {
 	private ResourceResolver() {}
@@ -23,7 +23,7 @@ public final class ResourceResolver {
 	}
 	
 	public static final class Path {
-		public static final String CONTINENTS = Attributes.CONTINENTS;
+		public static final String CONTINENTS = Attribute.CONTINENTS;
 		public static final String CONTINENTS_CLEANCONTINENT = CONTINENTS + "/{" + Attribute.CONTINENT + '}';
 		public static final String COUNTRIES_CITIES = Attribute.COUNTRIES + '/' + Attribute.CITIES;
 		public static final String COUNTRIES_CLEANCOUNTRY_CITIES = Attribute.COUNTRIES + "/{" + Attribute.COUNTRY + "}/" + Attribute.CITIES;

@@ -15,7 +15,8 @@
   </head>
   
 <body>
-  <vdapp:header/>
-
+  <header>
+    <vdapp:header/>
+  </header>
 </body>
 </html>
