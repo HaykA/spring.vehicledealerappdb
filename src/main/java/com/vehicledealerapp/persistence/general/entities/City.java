@@ -57,7 +57,6 @@ public class City implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
 		return result;
@@ -72,8 +71,6 @@ public class City implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		City other = (City) obj;
-		if (id != other.id)
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
