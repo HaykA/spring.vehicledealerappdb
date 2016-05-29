@@ -11,7 +11,7 @@
 <html>
 
   <head>
-    <vdapp:head title="Settings - Continents"></vdapp:head>
+    <vdapp:head title="Locale Settings"></vdapp:head>
   </head>
   
   <body>

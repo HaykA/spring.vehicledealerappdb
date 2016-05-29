@@ -5,6 +5,11 @@ $(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
+$(function () {
+  $('[data-toggle="popover"]').popover();
+})
+
+
 $(document).ready(function() {
     $("select").each(function () {
         $(this).val($(this).find('option[selected]').val());
@@ -15,6 +20,35 @@ $(document).ready(function() {
 	$disableOSButton = $('button[role="disableOnSubmit"');
 	disableOnSubmit($disableOSButton);
 });
+
+$(document).ready(function() {
+	$hidableSlave = $('*[role="hidableSlave"]');
+	$hidableSlaveInput = $('input[role="hidableSlave"]');
+	$disablingSlave = $('*[role="disablingSlave"]');
+	$hidableSlave.hide();
+	
+	$('*[role="masterForHidableSlaves"]').bind('change input', function() {
+		showHidableSlave();
+		$disablingSlave.attr('disabled', 'disabled');
+		$disablingSlave.click(function(e) {
+			e.preventDefault();
+		});
+	});
+	
+	function showHidableSlave() {
+		if ($hidableSlave.is(':hidden')) {
+			$hidableSlave.fadeIn(200);
+		}
+	}
+});
+
+function changeValue(masterId, slaveId) {
+	$master = $('#' + masterId);
+	$slave = $('#' + slaveId);
+	$master.change(function() {
+		$slave.val($master.val());
+	});
+}
 
 /**
  * Disables button on submit, by control-id
@@ -52,7 +86,7 @@ function checkSelectAllByName($master, $slave, selectAllText, unselectAllText, s
 		unselectAllText = '<i class="fa fa-check-square fa-fw"></i> ' + unselectAllText;
 	}
 	
-	if ($slave.not(':checked').length == 0) {
+	if ($slave.length > 0 && $slave.not(':checked').length == 0) {
 		$master.removeClass(btnDefault);
 		$master.addClass(btnPrimary);
 		$master.html(unselectAllText);
@@ -62,6 +96,9 @@ function checkSelectAllByName($master, $slave, selectAllText, unselectAllText, s
 		$master.addClass(btnDefault);
 		$master.html(selectAllText);
 		$master.prop('role', 'selector');
+		if ($slave.length == 0) {
+			$master.prop('disabled', 'disabled');
+		}
 	}
 }
 

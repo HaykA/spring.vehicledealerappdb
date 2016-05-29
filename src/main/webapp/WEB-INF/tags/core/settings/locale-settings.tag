@@ -7,7 +7,7 @@
     <div class="panel panel-default">
         <c:if test="${not showReturnButton}">
         <div class="panel-heading">
-          <h3 class="panel-title">Locale Settings</h3>
+          <h3 class="panel-title"><i class="fa fa-globe fa-fw"></i> <a href="<c:url value='/settings/locale'/>">Locale Settings</a></h3>
         </div>
         </c:if>
       <div class="panel-body">
@@ -16,6 +16,8 @@
             <i class="fa fa-arrow-circle-right fa-fw"></i> Enable/Disable Countries</a>
           <a href="<c:url value='/settings/locale/countries/cities'/>" class="list-group-item">
             <i class="fa fa-arrow-circle-right fa-fw"></i> Edit Cities</a>
+          <a href="<c:url value='/settings/locale/cities/new'/>" class="list-group-item">
+            <i class="fa fa-arrow-circle-right fa-fw"></i> New City</a>
         </div>
         
         <c:if test="${showReturnButton}">

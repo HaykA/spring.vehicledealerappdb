@@ -36,7 +36,7 @@
           <a href="#" class="bigger-icon" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear fa-2x"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<c:url value='/settings/locale'/>"><i class="fa fa-globe fa-fw"></i> Locale Settings</a></li>
-            <li><a href="<c:url value='/settings/branches'/>"><i class="fa fa-building fa-fw"></i> Branches</a></li>
+            <li><a href="<c:url value='/settings/branch'/>"><i class="fa fa-building fa-fw"></i> Branch Settings</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="<c:url value='/settings/persons'/>"><i class="fa fa-user fa-fw"></i> Persons and Users</a></li>
           </ul>

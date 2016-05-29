@@ -5,6 +5,7 @@ import static com.vehicledealerapp.web.util.ResourceResolver.View.redirectTo;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vehicledealerapp.persistence.general.entities.City;
-import com.vehicledealerapp.persistence.general.entities.Street;
 import com.vehicledealerapp.persistence.shared.entities.Continent;
 import com.vehicledealerapp.persistence.shared.entities.Country;
 import com.vehicledealerapp.services.LocaleService;
@@ -36,6 +36,11 @@ public class LocaleSettingsController {
 	
 	@InitBinder(Attribute.CONTINENT)
 	void initBinderContinent(WebDataBinder binder) {
+		binder.initDirectFieldAccess();
+	}
+	
+	@InitBinder(Attribute.CITY)
+	void initBinderCity(WebDataBinder binder) {
 		binder.initDirectFieldAccess();
 	}
 	
@@ -99,9 +104,7 @@ public class LocaleSettingsController {
 	 */
 	@RequestMapping(path = Path.COUNTRIES_CITIES, params = Attribute.COUNTRY, method = RequestMethod.GET)
 	String readCities(String country) {
-		return (country != null && !country.isEmpty())
-				? redirectTo(View.redirectToSettingsLocaleCitiesByCountryId(country))
-				: redirectTo(Mapping.SETTINGS_LOCALE, Path.COUNTRIES_CITIES);
+		return redirectTo(View.getSettingsLocaleCitiesByCountryId(country));
 	}
 	
 	/**
@@ -110,11 +113,26 @@ public class LocaleSettingsController {
 	 * @return
 	 */
 	@RequestMapping(path = Path.COUNTRIES_CLEANCOUNTRY_CITIES, method = RequestMethod.GET)
-	ModelAndView readCities(Country country) {
-		return new ModelAndView(View.SETTINGS_LOCALE_CITIES,
+	ModelAndView readCities(@PathVariable Country country, Pageable pageable, String sort) {
+		ModelAndView modelAndView =  new ModelAndView(View.SETTINGS_LOCALE_CITIES,
 				Attribute.COUNTRIES,
 					localeService.findEnabledCountriesOrCountriesHavingCities())
 			.addObject(Attribute.COUNTRY, country);
+		if ("name".equalsIgnoreCase(sort)) {
+			modelAndView.addObject(Attribute.CITIES, localeService.findCitiesByCountrySortedByName(country));
+		} else if ("postalcode".equalsIgnoreCase(sort)) {
+			modelAndView.addObject(Attribute.CITIES, localeService.findCitiesByCountrySortedByPostalCode(country));
+		} else {
+			modelAndView.addObject(Attribute.CITIES, country.getCities());
+		}
+		return modelAndView;
+	}
+	
+	
+	
+	@RequestMapping(path = Path.COUNTRIES_CLEANCOUNTRY_CITIES, method = RequestMethod.POST)
+	String readCities(@Valid City city, BindingResult bindingResult) {
+		return redirectTo(Mapping.SETTINGS_LOCALE, Path.COUNTRIES_CITIES);
 	}
 	
 	/**
@@ -123,30 +141,59 @@ public class LocaleSettingsController {
 	 * @return
 	 */
 	@RequestMapping(path = Path.CITIES_CLEANCITY, method = RequestMethod.GET)
-	ModelAndView readCity(City city) {
+	ModelAndView readCity(@PathVariable City city) {
 		return new ModelAndView(View.SETTINGS_LOCALE_CITY, Attribute.CITY, city)
 				.addObject(Attribute.COUNTRIES,
 						localeService.findEnabledCountriesOrCountriesHavingCities());
 	}
 	
-	/**
-	 * doGet streets - Forwards streets.jsp
-	 * @param city
-	 * @return
-	 */
-	@RequestMapping(path = Path.CITIES_CLEANCITY_STREETS, method = RequestMethod.GET)
-	ModelAndView readStreets(City city) {
-		return new ModelAndView(View.SETTINGS_LOCALE_STREETS, Attribute.CITY, city);
+	@RequestMapping(path = Path.CITIES_CLEANCITY, method = RequestMethod.POST)
+	String updateCity(@Valid City city) {
+		localeService.updateCity(city);
+		return View.redirectToSettingsLocaleCity(city);
+	}
+	
+	@RequestMapping(path = Path.CITIES_CLEANCITY, params="remove", method = RequestMethod.POST)
+	String removeCity(@PathVariable City city) {
+		localeService.deleteCity(city);
+		return View.redirectTo(Mapping.SETTINGS_LOCALE, Path.COUNTRIES_CITIES);
 	}
 	
 	/**
-	 * doGet street - Forwards street.jsp
-	 * @param street
+	 * doGet city - Forwards city.jsp
+	 * @param city
 	 * @return
 	 */
-	@RequestMapping(path = Path.STREETS_CLEANSTREET, method = RequestMethod.GET)
-	ModelAndView readStreet(Street street) {
-		return new ModelAndView(View.SETTINGS_LOCALE_STREET, Attribute.STREET, street);
+	@RequestMapping(path = Path.COUNTRIES_CLEANCOUNTRY_CITIES, params = Attribute.CITY, method = RequestMethod.POST)
+	String removeCity(String[] city, @PathVariable Country country) {
+		localeService.deleteCitiesByIds(city);
+		return View.redirectToSettingsLocaleCitiesByCountry(country);
 	}
+	
+	/* CREATING NEW CITY */
+	@RequestMapping(path = "cities/new", method = RequestMethod.GET)
+	ModelAndView newCity() {
+		return new ModelAndView("settings/locale/newcity", "countries", localeService.findEnabledCountries())
+				.addObject(new City());
+	}
+	
+	@RequestMapping(path = "cities/new", method = RequestMethod.POST)
+	String saveCity(@Valid City city, BindingResult bindingResult) {
+		localeService.updateCity(city);
+		return "redirect:/settings/locale/countries/" + city.getCountry().getId() + "/cities";
+	}
+	
+	@RequestMapping(path = "countries/{country}/cities/new", method = RequestMethod.GET)
+	ModelAndView newCityForCountry(@PathVariable Country country) {
+		return new ModelAndView("settings/locale/newcity", "countries", localeService.findEnabledCountries())
+				.addObject(Attribute.COUNTRY, country)
+				.addObject(new City(country));
+	}
+	
+	@RequestMapping(path = "countries/{country}/cities/new", method = RequestMethod.POST)
+	String addCityToCountry(@Valid City city, BindingResult bindingResult) {
+		return saveCity(city, bindingResult);
+	}
+
 
 }

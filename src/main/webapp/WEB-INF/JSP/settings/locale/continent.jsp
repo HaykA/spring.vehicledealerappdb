@@ -14,7 +14,7 @@
 <html>
 
   <head>
-    <vdapp:head title="Settings - Continents"></vdapp:head>
+    <vdapp:head title="Locale Settings - Enable/Disable Countries - ${continent.name}"></vdapp:head>
   </head>
   
   <body>

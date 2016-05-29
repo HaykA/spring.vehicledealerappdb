@@ -2,6 +2,7 @@ package com.vehicledealerapp.persistence.shared.entities;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -62,8 +63,22 @@ public class Country implements Serializable, Comparable<Country> {
 		return Collections.unmodifiableSet(cities);
 	}
 	
+	public Continent getContinent() {
+		return continent;
+	}
+	
 	public boolean addCity(City city) {
 		return (!cities.contains(city)) ? cities.add(city) : false;
+	}
+	
+	public boolean removeCities(List<City> cities) {
+		boolean value;
+		value = this.cities.removeAll(cities);
+		return value;
+	}
+	
+	public void removeCity(City city) {
+		cities.remove(city);
 	}
 
 	@Override

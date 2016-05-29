@@ -1,8 +1,6 @@
 package com.vehicledealerapp.persistence.general.entities;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.vehicledealerapp.persistence.shared.entities.Country;
 
@@ -34,10 +31,11 @@ public class City implements Serializable {
 	@JoinColumn(name = "countryid")
 	private Country country;
 	
-	@OneToMany(mappedBy = "city")
-	private Set<Street> streets;
+	public City() {}
 	
-	protected City() {}
+	public City(Country country) {
+		this.country = country;
+	}
 	
 	public long getId() {
 		return id;
@@ -47,33 +45,19 @@ public class City implements Serializable {
 		return name;
 	}
 	
-	public String getPostalCode() {
-		return postalCode;
-	}
-	
-	public Set<Street> getStreets() {
-		return Collections.unmodifiableSet(streets);
-	}
-	
 	public Country getCountry() {
 		return country;
 	}
+	
+	public String getPostalCode() {
+		return postalCode;
+	}
 
-	public String getPostalCodeAndName() {
-		return '(' + postalCode + ") " + name;
-	}
-	
-	public String getPostalCodeNameAndCountry() {
-		return postalCode + ' ' + name + ", " + country.getName();
-	}
-	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((postalCode == null) ? 0 : postalCode.hashCode());
 		return result;
@@ -88,10 +72,7 @@ public class City implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		City other = (City) obj;
-		if (country == null) {
-			if (other.country != null)
-				return false;
-		} else if (!country.equals(other.country))
+		if (id != other.id)
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -105,5 +86,4 @@ public class City implements Serializable {
 			return false;
 		return true;
 	}
-	
 }

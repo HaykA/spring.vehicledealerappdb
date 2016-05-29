@@ -11,7 +11,7 @@
 <html>
 
   <head>
-    <vdapp:head title="Settings"></vdapp:head>
+    <vdapp:head title="Branch Settings"></vdapp:head>
   </head>
   
   <body>
@@ -23,14 +23,13 @@
     <%-- Breadcrumb --%>
     <ol class="breadcrumb">
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
-      <li class="active">Settings</li>
+      <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
+      <li class="active">Branch Settings</li>
     </ol>
     
-      
-    <div class="col-sm-12"><h1><i class="fa fa-gear"></i> Settings</h1></div>
+    <div class="col-sm-12"><h1><i class="fa fa-building"></i> Branch Settings</h1></div>
+    <div class="col-sm-6"><vdapp:branch-settings showReturnButton="true"/></div>
     
-    <div class="col-sm-6"><vdapp:locale-settings/></div>
-    <div class="col-sm-6"><vdapp:branch-settings/></div>
 
   </body>
 </html>

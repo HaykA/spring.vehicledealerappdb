@@ -15,7 +15,7 @@
 <html>
 
   <head>
-    <vdapp:head title="Settings - Edit City"></vdapp:head>
+    <vdapp:head title="Settings - Continents"></vdapp:head>
   </head>
   
   <body>
@@ -29,34 +29,17 @@
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
       <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-      <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
-      <li><a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>">${city.country.name}</a></li>
-      <li class="active">(${city.postalCode}) ${city.name}</li>
+      <c:if test="${not empty country}">
+      <li><a href="<c:url value='/settings/locale/countries/${country.id}/cities'/>">${country.name}</a></li></c:if>
+      <li class="active">New City</li>
     </ol>
     
-    <c:choose>
-
-    <c:when test="${not empty city}">
     <div class="container-fluid">
-      <h1>${city.name}
-        <span class="small"> (${city.postalCode})
-        	<span class="small"> ${city.country.name}</span>
-       	</span>
-        </h1>
+      <h1>New City<c:if test="${not empty country}"><span class="small"> in ${country.name}</span></c:if></h1>
     </div>
     
-    <vform:city/>
-    
-    </c:when>
-    
-    <c:otherwise>
-      <div class="container-fluid">
-        <h2>City not found</h2>
-      </div>
-    </c:otherwise>
-    </c:choose>
-    
-    
+    <vform:city newForm="true"/>
+ 
   </body>
   
 </html>

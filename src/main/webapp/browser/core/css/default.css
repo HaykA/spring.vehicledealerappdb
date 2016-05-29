@@ -42,6 +42,10 @@ input[type='checkbox'].medium {
   margin: 0;
 }
 
+span.medium {
+	font: 400 22px "Titillium Web";
+	vertical-align: middle;
+}
 
 div.frame-container label {
   font: 400 22px "Titillium Web";
@@ -109,4 +113,13 @@ header .navbar-header .navbar-brand {
   padding-top: 12px;
   padding-bottom: 18px
   
+}
+
+.inner-button {
+	vertical-align: middle;
+	font-size: 1.5em;
+}
+
+.vertically-spaced {
+	margin-bottom: 20px;
 }
