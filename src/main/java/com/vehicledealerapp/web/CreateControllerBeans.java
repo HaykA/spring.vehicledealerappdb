@@ -17,8 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.vehicledealerapp.web.util.ResourceResolver.Mapping;
-import com.vehicledealerapp.web.util.ResourceResolver.View;
+import com.vehicledealerapp.web.util.LocaleResourceResolver.Mapping;
+import com.vehicledealerapp.web.util.LocaleResourceResolver.View;
 
 @Configuration
 @ComponentScan

@@ -5,13 +5,17 @@
 
 <%-- Custom-taglibs --%>
 <%@taglib prefix="vdapp" uri="http://vdapp.com/core/tags"%>
+<%@taglib prefix="vform" uri="http://vdapp.com/vform/tags"%>
 <%@taglib prefix="bs" uri="http://bootstrap.com/tags"%>
+
+<%-- Spring-taglibs --%>
+<%@taglib prefix='form' uri='http://www.springframework.org/tags/form'%>
 
 <!DOCTYPE html>
 <html>
 
   <head>
-    <vdapp:head title="Settings - Continents"></vdapp:head>
+    <vdapp:head title="Settings - Edit Country"></vdapp:head>
   </head>
   
   <body>
@@ -25,40 +29,30 @@
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
       <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-      <li class="active">Enable/Disable Countries</li>
+      <li><a href="<c:url value='/settings/locale/countries'/>">Edit Countries</a></li>
+      <li><a href="<c:url value='/settings/locale/continents/${country.continent.id}/countries'/>">${country.continent.name}</a></li>
+      <li class="active">${country.name}</li>
     </ol>
     
     <c:choose>
 
-    <c:when test="${not empty continents}">
-    <div class="col-sm-12"><h1>Enable / Disable Countries</h1></div>
-    
+    <c:when test="${not empty country}">
     <div class="container-fluid">
-      <div class="toolset">
-        <a href="<c:url value='/settings/locale'/>" class="btn btn-default">
-          <i class="fa fa-arrow-circle-left"></i> Return</a>
-      </div>
+      <h1>${country.name}<c:if test="${not empty country.nativeName}"><span class="small"> ${country.nativeName}</span></c:if></h1>
     </div>
     
-    <div class="col-sm-6">
+    <vform:country/>
     
-    
-      <h3>Continents</h3>
-      <div class="list-group">
-        <c:forEach var="continent" items="${continents}">
-        <a href="<c:url value='/settings/locale/continents/${continent.id}'/>" class="list-group-item">
-          <i class="fa fa-arrow-circle-right fa-fw"></i> ${continent.name}</a>
-        </c:forEach>
-      </div>
-    </div>
     </c:when>
     
     <c:otherwise>
       <div class="container-fluid">
-        <h1>No continents found</h1>
+        <h2>Country not found</h2>
       </div>
     </c:otherwise>
-
     </c:choose>
+    
+    
   </body>
+  
 </html>

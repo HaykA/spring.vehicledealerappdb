@@ -14,7 +14,9 @@
         <div class="list-group">
           <a href="<c:url value='/settings/locale/continents'/>" class="list-group-item">
             <i class="fa fa-arrow-circle-right fa-fw"></i> Enable/Disable Countries</a>
-          <a href="<c:url value='/settings/locale/countries/cities'/>" class="list-group-item">
+          <a href="<c:url value='/settings/locale/countries'/>" class="list-group-item">
+            <i class="fa fa-arrow-circle-right fa-fw"></i> Edit Countries</a>
+          <a href="<c:url value='/settings/locale/cities'/>" class="list-group-item">
             <i class="fa fa-arrow-circle-right fa-fw"></i> Edit Cities</a>
           <a href="<c:url value='/settings/locale/cities/new'/>" class="list-group-item">
             <i class="fa fa-arrow-circle-right fa-fw"></i> New City</a>

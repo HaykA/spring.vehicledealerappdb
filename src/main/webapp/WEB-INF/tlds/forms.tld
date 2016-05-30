@@ -10,4 +10,8 @@
       <name>city</name>
       <path>/WEB-INF/tags/vform/city.tag</path>
    </tag-file>
+   <tag-file>
+      <name>country</name>
+      <path>/WEB-INF/tags/vform/country.tag</path>
+   </tag-file>
 </taglib>

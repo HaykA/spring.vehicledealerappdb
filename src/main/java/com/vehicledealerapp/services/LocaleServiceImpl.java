@@ -89,4 +89,15 @@ public class LocaleServiceImpl implements LocaleService {
 	public List<City> findCitiesByCountrySortedByPostalCode(Country country) {
 		return cityDAO.findByCountryOrderByPostalCode(country);
 	}
+
+	@Override
+	@ModifyingTransactionalServiceMethod
+	public void updateCountry(Country country) {
+		countryDAO.saveAndFlush(country);
+	}
+
+	@Override
+	public List<Country> findEnabledCountriesOrCountriesHavingCitiesByContinentSortedByName(Continent continent) {
+		return countryDAO.findDistinctByContinentAndEnabledOrCitiesNotNullOrderByName(continent, true);
+	}
 }

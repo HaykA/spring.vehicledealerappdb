@@ -13,6 +13,8 @@ public interface LocaleService {
 	Country readCountry(long id);
 	List<Country> findEnabledCountries();
 	List<Country> findEnabledCountriesOrCountriesHavingCities();
+	List<Country> findEnabledCountriesOrCountriesHavingCitiesByContinentSortedByName(Continent continent);
+	void updateCountry(Country country);
 	
 	List<City> findCitiesByCountrySortedByName(Country country);
 	List<City> findCitiesByCountrySortedByPostalCode(Country country);

@@ -32,7 +32,7 @@
         
       <c:choose>
       <c:when test="${not empty country}">
-      <li><a href="<c:url value='/settings/locale/countries/cities'/>">Edit Cities</a></li>
+      <li><a href="<c:url value='/settings/locale/cities'/>">Edit Cities</a></li>
       <li class="active">${country.name}</li>
       </c:when>
         
@@ -52,7 +52,7 @@
         </c:if>
       </h1>
       
-      <form action="<c:url value='/settings/locale/countries/cities'/>">
+      <form action="<c:url value='/settings/locale/cities'/>">
         <select id="select-country" name="country" class="form-control" onchange="this.form.submit();">
           <option value="">- Select country -</option>
           <c:forEach var="availableCountry" items="${countries}">
@@ -118,7 +118,7 @@
         <c:forEach var="city" items="${cities}" varStatus="loop">
         <input type="checkbox" id="${city.id}" name="city" value="${city.id}" class="medium"/>
         <label for="${city.id}">
-          <a href="<c:url value='/settings/locale/cities/${city.id}'/>">(${city.postalCode}) ${city.name}</a></label>
+          <a href="<c:url value='/settings/locale/cities/${city.id}'/>" class="medium">(${city.postalCode}) ${city.name}</a></label>
         <br>
         </c:forEach>
         </c:when>

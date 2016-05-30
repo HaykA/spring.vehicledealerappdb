@@ -44,6 +44,12 @@ public class Continent implements Serializable {
 		return countries.stream().filter(Country::isEnabled)
 				.collect(Collectors.toCollection(TreeSet::new));
 	}
+	
+	public Set<Country> getCountriesHavingCities() {
+		return countries.stream().filter(Country::hasCities)
+				.collect(Collectors.toCollection(TreeSet::new));
+	}
+
 
 	@Override
 	public int hashCode() {

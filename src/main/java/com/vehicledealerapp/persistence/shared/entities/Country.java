@@ -31,12 +31,15 @@ public class Country implements Serializable, Comparable<Country> {
 	private long id;
 	
 	private String name;
+	private String nativeName;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "continentid")
 	private Continent continent;
 	
 	private boolean enabled;
+	private boolean postalCodePrefixEnabled;
+	private boolean postalCodeSuffixEnabled;
 	
 	@OneToMany(mappedBy = "country")
 	private Set<City> cities = new TreeSet<>();
@@ -51,6 +54,14 @@ public class Country implements Serializable, Comparable<Country> {
 		return name;
 	}
 	
+	public String getNativeName() {
+		return nativeName;
+	}
+	
+	public void setNativeName(String nativeName) {
+		this.nativeName = nativeName;
+	}
+	
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -59,8 +70,28 @@ public class Country implements Serializable, Comparable<Country> {
 		this.enabled = enabled;
 	}
 	
+	public boolean isPostalCodePrefixEnabled() {
+		return postalCodePrefixEnabled;
+	}
+	
+	public void setPostalCodePrefixEnabled(boolean postalCodePrefixEnabled) {
+		this.postalCodePrefixEnabled = postalCodePrefixEnabled;
+	}
+	
+	public boolean isPostalCodeSuffixEnabled() {
+		return postalCodeSuffixEnabled;
+	}
+	
+	public void setPostalCodeSuffixEnabled(boolean postalCodeSuffixEnabled) {
+		this.postalCodeSuffixEnabled = postalCodeSuffixEnabled;
+	}
+	
 	public Set<City> getCities() {
 		return Collections.unmodifiableSet(cities);
+	}
+	
+	boolean hasCities() {
+		return cities.size() > 0;
 	}
 	
 	public Continent getContinent() {

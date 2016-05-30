@@ -12,10 +12,14 @@
 
 <%@attribute name='newForm' required='false' type='java.lang.Boolean'%>
 
-<c:if test="${not newForm}">
-  <c:set var="masterForHidableSlaves" value=' role="masterForHidableSlaves"'/>
-  <c:set var="hidableSlave" value=' role="hidableSlave"'/>
-</c:if>
+<c:choose>
+  <c:when test="${empty city.country}">
+    <c:url var="cancelUrl" value='/settings/locale/cities'/>
+  </c:when>
+  <c:otherwise>
+    <c:url var="cancelUrl" value='/settings/locale/countries/${city.country.id}/cities'/>
+  </c:otherwise>
+</c:choose>
 
   <form:form commandName="city" id="cityform">
     <c:if test="${not newForm}">
@@ -29,7 +33,7 @@
     </c:if>
     
     <div class="container-fluid">
-      <c:if test="${isNewForm or empty country}">
+      <c:if test="${newForm or empty country}">
       <div class="col-sm-12 row vertically-spaced">
         <div class="col-sm-6 row">
           <div class="input-group">
@@ -53,7 +57,7 @@
         <div class="col-sm-6 row">
           <div class="input-group">
   			<span class="input-group-addon" id="sizing-addon2" data-toggle="tooltip" title="Mandatory"><i class="fa fa-asterisk"></i></span>
-  			<form:input path="name" placeholder="Name" role="masterForHidableSlaves" cssClass="form-control" readonly="${readOnly}"/>
+            <form:input path="name" placeholder="Name" role="masterForHidableSlaves" cssClass="form-control" readonly="${readOnly}"/>
 		  </div>
         </div>
       </div>
@@ -61,17 +65,17 @@
       <div class="col-sm-12 row vertically-spaced">
         <div class="col-sm-6 row">
           <div class="input-group">
-        <span class="input-group-addon" id="sizing-addon2" data-toggle="tooltip" title="Mandatory"><i class="fa fa-asterisk"></i></span>
-        <form:input path="postalCode" placeHolder="Postal Code" role="masterForHidableSlaves" cssClass="form-control" readonly="${readOnly}"/>
+            <span class="input-group-addon" id="sizing-addon2" data-toggle="tooltip" title="Mandatory"><i class="fa fa-asterisk"></i></span>
+            <form:input path="postalCode" placeHolder="Postal Code" role="masterForHidableSlaves" cssClass="form-control" readonly="${readOnly}"/>
       </div>
         </div>
       </div>
     </div>
 
-    <div class="container-fluid"${hidableSlave}>
+    <div class="container-fluid" role="hidableSlave">
       <div class="toolset">
         <button type="submit" class="btn btn-lg btn-info"><i class="fa fa-save" role="disableOnSubmit"></i> Save</button>
-        <a href="<c:url value='/settings/locale/countries/${city.country.id}/cities'/>" class="btn btn-lg btn-default"><i class="fa fa-remove"></i> Cancel</a>
+        <a href="${cancelUrl}" class="btn btn-lg btn-default"><i class="fa fa-remove"></i> Cancel</a>
       </div>
     </div>
     </form:form>

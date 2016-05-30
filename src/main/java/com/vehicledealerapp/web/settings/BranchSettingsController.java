@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.vehicledealerapp.web.util.ResourceResolver.Mapping;
-import com.vehicledealerapp.web.util.ResourceResolver.View;
+import com.vehicledealerapp.web.util.LocaleResourceResolver.Mapping;
+import com.vehicledealerapp.web.util.LocaleResourceResolver.View;
 @Controller
 @RequestMapping(Mapping.SETTINGS_BRANCH)
 public class BranchSettingsController {
