@@ -11,7 +11,7 @@
 <html>
 
   <head>
-    <vdapp:head title="Settings - Continents"></vdapp:head>
+    <vdapp:head title="Branch Settings - Edit Branches"></vdapp:head>
   </head>
   
   <body>
@@ -24,37 +24,38 @@
     <ol class="breadcrumb">
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-      <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-      <li class="active">Enable/Disable Countries</li>
+      <li><a href="<c:url value='/settings/branch'/>" data-toggle="tooltip" title="Branch Settings"><bs:fa icon="building"/></a></li>
+      <li class="active">Edit Branches</li>
     </ol>
     
-    <div class="col-sm-12"><h1>Enable / Disable Countries</h1></div>
+    <div class="col-sm-12"><h1>Edit Branches</h1></div>
     
     <div class="container-fluid">
       <div class="toolset">
-        <a href="<c:url value='/settings/locale'/>" class="btn btn-default">
+        <a href="<c:url value='/settings/branch'/>" class="btn btn-default">
           <i class="fa fa-arrow-circle-left"></i> Return</a>
       </div>
     </div>
 
     <div class="col-sm-6">
       <c:choose>
-      <c:when test="${not empty continents}">
-      <h3>Continents</h3>
+      <c:when test="${not empty page.content}">
       <div class="list-group">
-        <c:forEach var="continent" items="${continents}">
-        <a href="<c:url value='/settings/locale/continents/${continent.id}'/>" class="list-group-item">
-          <i class="fa fa-arrow-circle-right fa-fw"></i> ${continent.name}</a>
+        <c:forEach var="branch" items="${page.content}">
+        <pre>
+        ${branch.name} /
+        ${branch.address.streetAndHouse} /
+        ${branch.address.city.postalCodeAndName}
+        </pre>
         </c:forEach>
       </div>
       </c:when>
     
       <c:otherwise>
-      <h3>No continents found</h3>
+      <h3>No Branches Found</h3>
       </c:otherwise>
       </c:choose>
-      
     </div>
-    
+
   </body>
 </html>

@@ -52,6 +52,10 @@ public class City implements Serializable {
 	public String getPostalCode() {
 		return postalCode;
 	}
+	
+	public String getPostalCodeAndName() {
+		return postalCode + ' ' + name;
+	}
 
 	@Override
 	public int hashCode() {

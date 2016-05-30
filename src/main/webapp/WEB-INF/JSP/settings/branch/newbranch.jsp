@@ -15,7 +15,7 @@
 <html>
 
   <head>
-    <vdapp:head title="Settings - New City"></vdapp:head>
+    <vdapp:head title="Settings - New Branch"></vdapp:head>
   </head>
   
   <body>
@@ -28,17 +28,13 @@
     <ol class="breadcrumb">
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-      <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-      <c:if test="${not empty country}">
-      <li><a href="<c:url value='/settings/locale/countries/${country.id}/cities'/>">${country.name}</a></li></c:if>
-      <li class="active"><i class="fa fa-asterisk"></i> New City</li>
+      <li><a href="<c:url value='/settings/branch'/>" data-toggle="tooltip" title="Branch Settings"><bs:fa icon="building"/></a></li>
+      <li class="active"><i class="fa fa-asterisk"></i> New Branch</li>
     </ol>
     
     <div class="container-fluid">
-      <h1><i class="fa fa-asterisk"></i> New City<c:if test="${not empty country}"><span class="small"> in ${country.name}</span></c:if></h1>
+      <h1><i class="fa fa-asterisk"></i> New Branch</h1>
     </div>
-    
-    <vform:city newForm="true"/>
  
   </body>
   

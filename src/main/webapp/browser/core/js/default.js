@@ -22,6 +22,10 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+	hideHidableSlaves();
+});
+
+function hideHidableSlaves() {
 	$hidableSlave = $('*[role="hidableSlave"]');
 	$hidableSlaveInput = $('input[role="hidableSlave"]');
 	$disablingSlave = $('*[role="disablingSlave"]');
@@ -40,7 +44,7 @@ $(document).ready(function() {
 			$hidableSlave.fadeIn(200);
 		}
 	}
-});
+}
 
 function changeValue(masterId, slaveId) {
 	$master = $('#' + masterId);

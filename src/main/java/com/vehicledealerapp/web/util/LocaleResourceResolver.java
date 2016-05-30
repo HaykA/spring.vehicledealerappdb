@@ -12,7 +12,6 @@ public final class LocaleResourceResolver {
 		public static final String INDEX = '/' + View.INDEX;
 		public static final String SETTINGS = '/' + View.SETTINGS;
 		public static final String SETTINGS_LOCALE = '/' + View.SETTINGS_LOCALE;
-		public static final String SETTINGS_BRANCH = '/' + View.SETTINGS_BRANCH;
 	}
 	
 	public static final class Path {
@@ -44,8 +43,6 @@ public final class LocaleResourceResolver {
 		public static final String SETTINGS_LOCALE_CITY = SETTINGS_LOCALE + '/' + LocaleAttributes.CITY;
 		public static final String SETTINGS_LOCALE_CITIES = SETTINGS_LOCALE + '/' + LocaleAttributes.CITIES;
 		public static final String SETTINGS_LOCALE_NEWCITY = SETTINGS_LOCALE + "/newcity";
-		
-		public static final String SETTINGS_BRANCH = SETTINGS + "/branch";
 		
 		public static String redirectTo(String target) {
 			return REDIRECT + target;

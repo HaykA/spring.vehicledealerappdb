@@ -12,15 +12,15 @@
         </c:if>
       <div class="panel-body">
         <div class="list-group">
-          <a href="<c:url value='/settings/locale/branches'/>" class="list-group-item">
+          <a href="<c:url value='/settings/branch/branches'/>" class="list-group-item">
             <i class="fa fa-arrow-circle-right fa-fw"></i> Edit Branches</a>
-          <a href="<c:url value='/settings/locale/branches/new'/>" class="list-group-item">
+          <a href="<c:url value='/settings/branch/branches/new'/>" class="list-group-item">
             <i class="fa fa-arrow-circle-right fa-fw"></i> New Branch</a>
         </div>
         
         <c:if test="${showReturnButton}">
-        <a href="<c:url value='/settings'/>" class="btn btn-lg btn-default" data-toggle="tooltip" title="Return">
-          <i class="fa fa-arrow-circle-left"></i></a>
+        <a href="<c:url value='/settings'/>" class="btn btn-lg btn-default" data-toggle="tooltip" title="Settings">
+          <i class="fa fa-gear"></i></a>
         </c:if>
       </div>
     </div>

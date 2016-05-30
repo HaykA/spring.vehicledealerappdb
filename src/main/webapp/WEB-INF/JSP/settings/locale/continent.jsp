@@ -48,12 +48,12 @@
         <div class="frame-container"> 
           <c:forEach var="country" items="${continent.countries}" varStatus="loop">
           <form:checkbox path="countries['${loop.index}'].enabled"
-            cssClass="medium" label="${country.name}"/><br/>      
+            cssClass="medium" label="${country.name}" role="masterForHidableSlaves"/><br/>      
           </c:forEach>
         </div>
       </div>
   
-      <div class="container-fluid">
+      <div class="container-fluid" role="hidableSlave">
         <div class="toolset">
           <button type="submit" class="btn btn-lg btn-info" role="disableOnSubmit"><i class="fa fa-save"></i> Save</button>
           <a href="/vehicledealerapp/settings/locale/continents" class="btn btn-lg btn-default">
@@ -73,6 +73,7 @@
   
     <script type="text/javascript">
     	handleSelectAllFunctionForSlaveContainingName('btn-selectAll', 'countries', 'Select All', 'Unselect All', true, true);
+    	$(document).ready(function() {hideHidableSlaves()});
     </script>
     
   </body>

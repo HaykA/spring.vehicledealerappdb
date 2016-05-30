@@ -37,8 +37,11 @@
           <ul class="dropdown-menu">
             <li><a href="<c:url value='/settings/locale'/>"><i class="fa fa-globe fa-fw"></i> Locale Settings</a></li>
             <li><a href="<c:url value='/settings/branch'/>"><i class="fa fa-building fa-fw"></i> Branch Settings</a></li>
+            <li><a href="#"><i class="fa fa-users fa-fw"></i> Users</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="<c:url value='/settings/persons'/>"><i class="fa fa-user fa-fw"></i> Persons and Users</a></li>
+            <li><a href="#"><i class="fa fa-wrench fa-fw"></i> Maintenance</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#"><i class="fa fa-sliders fa-fw"></i> Preferences</a></li>
           </ul>
         </li>
       </ul>
