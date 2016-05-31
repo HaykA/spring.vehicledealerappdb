@@ -34,8 +34,9 @@
     
     <div class="container-fluid">
       <h1><i class="fa fa-asterisk"></i> New Branch</h1>
-      <vform:branch newForm="true"/>
     </div>
+    
+    <vform:branch newForm="true"/>
  
   </body>
   <script type="text/javascript">

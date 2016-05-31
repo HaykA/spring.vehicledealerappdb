@@ -26,29 +26,41 @@
         </c:choose>
         
       </div>
-    </div>
     
-    <div class="container-fluid">
+    <c:if test="${not newForm and not country.enabled}">
+      <c:set var="readOnly" value="true"/>
+    </c:if>
+       
+    <form:hidden path="enabled"/>
+      <div class="container-fluid container-sm">
+        <div class="well clearfix no-h_padding">
+          <div class="col-sm-12 no-h_padding">
+            <div class="col-sm-12 vertically-spaced">
+              <form:label path="nativeName" cssClass="input-label">Native Name</form:label>
+              <div class="input-group">
+                <span class="input-group-addon" data-toggle="tooltip" title="Native Name"><i class="fa fa-font fa-fw"></i></span>
+                  <form:input path="nativeName" placeholder="Native Name" role="masterForHidableSlaves" cssClass="form-control" readonly="${readOnly}"/>
+              </div>
+            </div>
+          </div>
       
-      <form:hidden path="enabled"/>
-      
-      <div class="col-sm-12 row vertically-spaced">
-        <div class="col-sm-6 row">
-          <form:input path="nativeName" placeholder="Native Name" role="masterForHidableSlaves" cssClass="form-control"/>
+          <div class="col-sm-12 no-h_padding">
+            <div class="col-sm-8 vertically-spaced">
+              <form:label path="postalCodePattern" cssClass="input-label">Postal Code Pattern</form:label>
+              <div class="input-group">
+                <span class="input-group-addon" data-toggle="tooltip" title="Postal Code Pattern"><i class="fa fa-terminal fa-fw"></i></span>
+                <form:input path="postalCodePattern" placeholder="Postal Code Pattern" role="masterForHidableSlaves" cssClass="form-control" readonly="${readOnly}"/>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div class="col-sm-12 row vertically-spaced">
-        <div class="col-sm-6 row">
-          <form:input path="postalCodePattern" placeholder="Postal Code Pattern" role="masterForHidableSlaves" cssClass="form-control"/>
-        </div>
-      </div>
-    </div>
 
-    <div class="container-fluid" role="hidableSlave">
-      <div class="toolset">
-        <button type="submit" class="btn btn-lg btn-info"><i class="fa fa-save" role="disableOnSubmit"></i> Save</button>
-        <a href="<c:url value='/settings/locale/countries/${country.id}'/>" class="btn btn-lg btn-default"><i class="fa fa-remove"></i> Cancel</a>
+      <div class="container-fluid" role="hidableSlave">
+        <div class="toolset">
+          <button type="submit" class="btn btn-lg btn-info"><i class="fa fa-save" role="disableOnSubmit"></i> Save</button>
+          <a href="<c:url value='/settings/locale/countries/${country.id}'/>" class="btn btn-lg btn-default"><i class="fa fa-remove"></i> Cancel</a>
+        </div>
       </div>
-    </div>
+      </div>
     </form:form>

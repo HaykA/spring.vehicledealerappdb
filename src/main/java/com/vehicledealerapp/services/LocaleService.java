@@ -11,6 +11,7 @@ public interface LocaleService {
 	
 	Country readCountry(long id);
 	List<Country> findEnabledCountries();
+	List<Country> findEnabledCountriesByContinent(Continent continent);
 	void updateCountry(Country country);
 
 }

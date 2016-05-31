@@ -29,7 +29,7 @@
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
       <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-      <li><a href="<c:url value='/settings/locale/countries'/>">Edit Countries</a></li>
+      <li><a href="<c:url value='/settings/locale/countries'/>" data-toggle="tooltip" title="Edit Countries"><i class="fa fa-edit"></i></a></li>
       <li><a href="<c:url value='/settings/locale/continents/${country.continent.id}/countries'/>">${country.continent.name}</a></li>
       <li class="active">${country.name}</li>
     </ol>
@@ -38,7 +38,7 @@
 
     <c:when test="${not empty country}">
     <div class="container-fluid">
-      <h1>${country.name}<c:if test="${not empty country.nativeName}"><span class="small"> ${country.nativeName}</span></c:if></h1>
+      <h1><i class="fa fa-edit"></i> ${country.name}<c:if test="${not country.enabled}"><span class="small"> (disabled)</span></c:if></h1>
     </div>
     
     <vform:country/>

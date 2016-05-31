@@ -25,10 +25,10 @@
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
       <li><a href="<c:url value='/settings/locale'/>" data-toggle="tooltip" title="Locale Settings"><bs:fa icon="globe"/></a></li>
-      <li class="active">Enable/Disable Countries</li>
+      <li class="active"><i class="fa fa-toggle-on"></i> Enable/Disable Countries</li>
     </ol>
     
-    <div class="col-sm-12"><h1>Enable / Disable Countries</h1></div>
+    <div class="col-sm-12"><h1><i class="fa fa-toggle-on"></i> Enable / Disable Countries</h1></div>
     
     <div class="container-fluid">
       <div class="toolset">

@@ -24,7 +24,7 @@
     <ol class="breadcrumb">
       <li><a href="<c:url value='/'/>" data-toggle="tooltip" title="Home"><bs:fa icon="home"/></a></li>
       <li><a href="<c:url value='/settings'/>" data-toggle="tooltip" title="Settings"><bs:fa icon="gear"/></a></li>
-      <li class="active">Locale Settings</li>
+      <li class="active"><i class="fa fa-globe"></i> Locale Settings</li>
     </ol>
     
     <div class="col-sm-12"><h1><i class="fa fa-globe"></i> Locale Settings</h1></div>

@@ -38,6 +38,10 @@ public final class LocaleResourceResolver {
 			return REDIRECT + target;
 		}
 		
+		public static String redirectTo(String mapping, String path) {
+			return REDIRECT_PREFIX + mapping + '/' + path;
+		}
+		
 		public static String getSettingsLocaleCountriesByContinent(Continent continent) {
 			return getSettingsLocaleCountriesByContinentId(continent.getId());
 		}
@@ -52,10 +56,6 @@ public final class LocaleResourceResolver {
 		
 		public static String redirectToSettingsLocaleCountry(Country country) {
 			return redirectTo(SETTINGS_LOCALE_COUNTRIES + "/" + country.getId());
-		}
-		
-		public static String redirectTo(String mapping, String path) {
-			return REDIRECT_PREFIX + mapping + '/' + path;
 		}
 	}
 }

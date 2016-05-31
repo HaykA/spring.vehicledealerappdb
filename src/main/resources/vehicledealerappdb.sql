@@ -4,7 +4,7 @@ USE `vehicledealerappdb`;
 --
 -- Host: localhost    Database: vehicledealerappdb
 -- ------------------------------------------------------
--- Server version	5.7.10-log
+-- Server version	5.6.30-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -197,6 +197,7 @@ CREATE TABLE `branch` (
   `name` varchar(45) NOT NULL,
   `street` varchar(45) NOT NULL,
   `house` varchar(15) NOT NULL,
+  `addressline` varchar(45) DEFAULT NULL,
   `postalcode` varchar(15) NOT NULL,
   `city` varchar(45) NOT NULL,
   `countryid` int(3) unsigned NOT NULL,
@@ -210,7 +211,7 @@ CREATE TABLE `branch` (
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `fk_branch$country_idx` (`countryid`),
   CONSTRAINT `fk_branch$country` FOREIGN KEY (`countryid`) REFERENCES `country` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +220,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (1,'Base Cars','Appelmansstraat','1170','2018','Antwerpen',17,NULL,NULL,NULL,NULL,1),(2,'Base Cars Roeselare','Brugsesteenweg','103','8800','Roeselare',17,NULL,NULL,NULL,NULL,1),(3,'Base Cars Kortrijk','Stationstraat','10A','8500','Kortrijk',17,'test@test.be','0474747474','051213242','Hello World',1);
+INSERT INTO `branch` VALUES (1,'Base Cars','Appelmansstraat','1170',NULL,'2018','Antwerpen',17,NULL,NULL,NULL,NULL,1),(2,'Base Cars Roeselare','Brugsesteenweg','103',NULL,'8800','Roeselare',17,'','','','',1),(5,'Some company','Some street','123',NULL,'ABCDPost','Sofia',26,'','','','',1);
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,6 +273,35 @@ CREATE TABLE `category` (
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `city`
+--
+
+DROP TABLE IF EXISTS `city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `city` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `countryid` int(3) unsigned NOT NULL,
+  `postalcode` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_city$country_idx` (`countryid`),
+  CONSTRAINT `fk_city$country` FOREIGN KEY (`countryid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `city`
+--
+
+LOCK TABLES `city` WRITE;
+/*!40000 ALTER TABLE `city` DISABLE KEYS */;
+INSERT INTO `city` VALUES (1,'Brussel',17,'1000'),(2,'Yerevan',8,'0004'),(3,'Antwerpen',17,'2018'),(6,'Gent',17,'9000'),(7,'Roeselare',17,'8800'),(8,'Kortrijk',17,'8500'),(9,'Antwerpen',17,'2020'),(10,'Brugge',17,'8000'),(11,'Antwerpen',17,'2000'),(12,'Yerevan',8,'0001');
+/*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -380,6 +410,63 @@ LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
 INSERT INTO `member` VALUES (1,'Hayk','Avetisyan',1);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `person`
+--
+
+DROP TABLE IF EXISTS `person`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `person` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(45) NOT NULL,
+  `secondname` varchar(45) NOT NULL,
+  `branchid` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `person`
+--
+
+LOCK TABLES `person` WRITE;
+/*!40000 ALTER TABLE `person` DISABLE KEYS */;
+INSERT INTO `person` VALUES (1,'Hayk','Avetisyan',1);
+/*!40000 ALTER TABLE `person` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `street`
+--
+
+DROP TABLE IF EXISTS `street`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `street` (
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `postalcodeprefix` varchar(5) DEFAULT NULL,
+  `postalcodesuffix` varchar(5) DEFAULT NULL,
+  `cityid` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_street$city_idx` (`cityid`),
+  CONSTRAINT `fk_street$city` FOREIGN KEY (`cityid`) REFERENCES `city` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `street`
+--
+
+LOCK TABLES `street` WRITE;
+/*!40000 ALTER TABLE `street` DISABLE KEYS */;
+INSERT INTO `street` VALUES (1,'Appelmansstraat',NULL,NULL,3);
+/*!40000 ALTER TABLE `street` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -518,4 +605,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-31 16:07:35
+-- Dump completed on 2016-05-31 23:27:38

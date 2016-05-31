@@ -32,12 +32,12 @@
         
       <c:choose>
       <c:when test="${not empty continent}">
-      <li><a href="<c:url value='/settings/locale/countries'/>">Edit Countries</a></li>
+      <li><a href="<c:url value='/settings/locale/countries'/>" data-toggle="tooltip" title="Edit Countries"><i class="fa fa-edit"></i></a></li>
       <li class="active">${continent.name}</li>
       </c:when>
         
       <c:otherwise>
-      <li class="active">Edit Countries</li>
+      <li class="active"><i class="fa fa-edit"></i> Edit Countries</li>
       </c:otherwise>
       </c:choose>
     </ol>
@@ -46,7 +46,7 @@
 
     <c:when test="${not empty continents}">
     <div class="container-fluid">
-      <h1>Countries in:
+      <h1><i class="fa fa-search"></i> Countries in:
         <c:if test="${not empty continent}">
         <span class="small"> ${continent.name}</span>
         </c:if>

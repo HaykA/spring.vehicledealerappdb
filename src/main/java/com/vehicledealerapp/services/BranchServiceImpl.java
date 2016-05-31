@@ -36,4 +36,15 @@ public class BranchServiceImpl implements BranchService {
 	public void updateBranch(Branch branch) {
 		branchDAO.save(branch);
 	}
+
+	@Override
+	@ModifyingTransactionalServiceMethod
+	public void deleteBranch(Branch branch) {
+		branchDAO.delete(branch);
+	}
+
+	@Override
+	public List<Country> findEnabledCountriesOrCountriesHavingBranches(Branch branch) {
+		return countryDAO.findByEnabledOrBranchesContaining(true, branch);
+	}
 }

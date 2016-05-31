@@ -1,5 +1,7 @@
 package com.vehicledealerapp.web.util;
 
+import com.vehicledealerapp.persistence.general.entities.Branch;
+
 public final class BranchResourceResolver {
 	private BranchResourceResolver() {}
 
@@ -34,6 +36,22 @@ public final class BranchResourceResolver {
 		
 		public static String redirectTo(String mapping, String path) {
 			return REDIRECT_PREFIX + mapping + '/' + path;
+		}
+		
+		public static String getSettingsBranchBranchesByBranch(Branch branch) {
+			return getSettingsBranchBranchesByBranchId(branch.getId());
+		}
+		
+		public static String getSettingsBranchBranchesByBranchId(long branchId) {
+			return getSettingsBranchBranchesByBranchId(String.valueOf(branchId));
+		}
+		
+		public static String getSettingsBranchBranchesByBranchId(String branchId) {
+			return SETTINGS_BRANCH_BRANCHES + '/' + branchId;
+		}
+		
+		public static String redirectToSettingsBranchBranchesByBranch(Branch branch) {
+			return redirectTo(getSettingsBranchBranchesByBranch(branch));
 		}
 	}
 }

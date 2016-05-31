@@ -137,7 +137,7 @@ public class LocaleSettingsController {
 		return new ModelAndView(View.SETTINGS_LOCALE_COUNTRIES, LocaleAttributes.CONTINENT, continent)
 				.addObject(LocaleAttributes.CONTINENTS, localeService.findAllContinents())
 				.addObject(LocaleAttributes.COUNTRIES,
-						localeService.findEnabledCountries());
+						localeService.findEnabledCountriesByContinent(continent));
 	}
 	
 	/**

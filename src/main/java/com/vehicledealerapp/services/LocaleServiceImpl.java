@@ -49,4 +49,9 @@ public class LocaleServiceImpl implements LocaleService {
 		countryDAO.saveAndFlush(country);
 	}
 
+	@Override
+	public List<Country> findEnabledCountriesByContinent(Continent continent) {
+		return countryDAO.findByContinentAndEnabledOrderByName(continent, true);
+	}
+
 }

@@ -21,6 +21,8 @@ public class Address implements Serializable {
 	@Length(min = 1, max = 15)
 	private String house;
 	
+	public String addressLine;
+	
 	@Valid
 	@Embedded
 	private City city;
@@ -31,6 +33,10 @@ public class Address implements Serializable {
 
 	public String getHouse() {
 		return house;
+	}
+	
+	public String getAddressLine() {
+		return addressLine;
 	}
 
 	public City getCity() {

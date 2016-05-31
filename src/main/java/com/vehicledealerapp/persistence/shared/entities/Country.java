@@ -1,7 +1,8 @@
 package com.vehicledealerapp.persistence.shared.entities;
 
 import java.io.Serializable;
-import java.util.regex.Pattern;
+import java.util.Collections;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
+
+import com.vehicledealerapp.persistence.general.entities.Branch;
 
 @Entity
 @NamedEntityGraph(name = Country.WITH_CONTINENT,
@@ -30,6 +34,9 @@ public class Country implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "continentid")
 	private Continent continent;
+	
+	@OneToMany(mappedBy = "country")
+	private Set<Branch> branches;
 	
 	private boolean enabled;
 	
@@ -70,14 +77,8 @@ public class Country implements Serializable {
 		return continent;
 	}
 	
-	public static boolean postalCodeMatches(Country country, String postalCode) {
-		if (country == null) {
-			return false;
-		}
-		if (country.postalCodePattern != null) {
-			return Pattern.compile(country.postalCodePattern).matcher(postalCode).matches();
-		}
-		return true;
+	Set<Branch> getBranches() {
+		return Collections.unmodifiableSet(branches);
 	}
 
 	@Override
