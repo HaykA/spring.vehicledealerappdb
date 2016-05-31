@@ -1,26 +1,39 @@
 package com.vehicledealerapp.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.vehicledealerapp.dao.BranchDAO;
+import com.vehicledealerapp.dao.CountryDAO;
 import com.vehicledealerapp.persistence.general.entities.Branch;
+import com.vehicledealerapp.persistence.shared.entities.Country;
 
 @ReadOnlyTransactionalService
 public class BranchServiceImpl implements BranchService {
-	private final BranchDAO branchDAO;	
+	private final BranchDAO branchDAO;
+	private final CountryDAO countryDAO;
 	
 	@Autowired
-	public BranchServiceImpl(BranchDAO branchDAO) {
+	public BranchServiceImpl(BranchDAO branchDAO,
+			CountryDAO countryDAO) {
 		this.branchDAO = branchDAO;
+		this.countryDAO = countryDAO;
 	}
 
 	@Override
-	public Page<Branch> findAll(Pageable pageable) {
-		return branchDAO.findAll(pageable);
+	public List<Branch> findAll() {
+		return branchDAO.findAll();
 	}
-	
-	
 
+	@Override
+	public List<Country> findEnabledCountries() {
+		return countryDAO.findByEnabledOrderByName(true);
+	}
+
+	@Override
+	@ModifyingTransactionalServiceMethod
+	public void updateBranch(Branch branch) {
+		branchDAO.save(branch);
+	}
 }

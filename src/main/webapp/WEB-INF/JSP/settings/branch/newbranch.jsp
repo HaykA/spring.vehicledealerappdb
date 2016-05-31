@@ -34,8 +34,15 @@
     
     <div class="container-fluid">
       <h1><i class="fa fa-asterisk"></i> New Branch</h1>
+      <vform:branch newForm="true"/>
     </div>
  
   </body>
-  
+  <script type="text/javascript">
+      $(document).ready(function() {
+        hideHidableSlaves();
+      });
+    </script>
 </html>
+
+

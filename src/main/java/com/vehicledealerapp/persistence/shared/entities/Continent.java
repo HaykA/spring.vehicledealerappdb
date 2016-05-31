@@ -3,9 +3,6 @@ package com.vehicledealerapp.persistence.shared.entities;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,17 +36,6 @@ public class Continent implements Serializable {
 	public List<Country> getCountries() {
 		return Collections.unmodifiableList(countries);
 	}
-	
-	public Set<Country> getEnabledCountries() {
-		return countries.stream().filter(Country::isEnabled)
-				.collect(Collectors.toCollection(TreeSet::new));
-	}
-	
-	public Set<Country> getCountriesHavingCities() {
-		return countries.stream().filter(Country::hasCities)
-				.collect(Collectors.toCollection(TreeSet::new));
-	}
-
 
 	@Override
 	public int hashCode() {

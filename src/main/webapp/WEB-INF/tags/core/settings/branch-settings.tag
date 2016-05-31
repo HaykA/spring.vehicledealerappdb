@@ -13,9 +13,9 @@
       <div class="panel-body">
         <div class="list-group">
           <a href="<c:url value='/settings/branch/branches'/>" class="list-group-item">
-            <i class="fa fa-arrow-circle-right fa-fw"></i> Edit Branches</a>
+            <i class="fa fa-edit fa-fw"></i> Edit Branches</a>
           <a href="<c:url value='/settings/branch/branches/new'/>" class="list-group-item">
-            <i class="fa fa-arrow-circle-right fa-fw"></i> New Branch</a>
+            <i class="fa fa-asterisk fa-fw"></i> New Branch</a>
         </div>
         
         <c:if test="${showReturnButton}">

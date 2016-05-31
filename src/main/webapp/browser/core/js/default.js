@@ -25,6 +25,10 @@ $(document).ready(function() {
 	hideHidableSlaves();
 });
 
+$(document).ready(function() {
+	$('*[role="mandatory"').addClass('mandatory');
+});
+
 function hideHidableSlaves() {
 	$hidableSlave = $('*[role="hidableSlave"]');
 	$hidableSlaveInput = $('input[role="hidableSlave"]');

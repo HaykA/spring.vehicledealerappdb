@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 import com.vehicledealerapp.enums.ArticleState;
 import com.vehicledealerapp.persistence.general.entities.Branch;
-import com.vehicledealerapp.persistence.general.entities.Person;
+import com.vehicledealerapp.persistence.general.entities.Member;
 import com.vehicledealerapp.persistence.system.entities.User;
 
 @Entity
@@ -76,7 +76,7 @@ public abstract class Article implements Serializable {
 			joinColumns = @JoinColumn(name = "personid"),
 			inverseJoinColumns = @JoinColumn(name = "articleid")
 			)
-	private Set<Person> contactPersons = new TreeSet<>();
+	private Set<Member> contactPersons = new TreeSet<>();
 	
 	private int views;
 

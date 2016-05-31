@@ -1,10 +1,7 @@
 package com.vehicledealerapp.persistence.shared.entities;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,14 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
-
-import com.vehicledealerapp.persistence.general.entities.City;
 
 @Entity
 @NamedEntityGraph(name = Country.WITH_CONTINENT,
 attributeNodes = @NamedAttributeNode("continent"))
-public class Country implements Serializable, Comparable<Country> {
+public class Country implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static final String WITH_CONTINENT = "Country.withContinent";
@@ -38,11 +32,9 @@ public class Country implements Serializable, Comparable<Country> {
 	private Continent continent;
 	
 	private boolean enabled;
-	private boolean postalCodePrefixEnabled;
-	private boolean postalCodeSuffixEnabled;
 	
-	@OneToMany(mappedBy = "country")
-	private Set<City> cities = new TreeSet<>();
+	private String postalCodePattern;
+	
 	
 	protected Country() {}
 	
@@ -70,46 +62,22 @@ public class Country implements Serializable, Comparable<Country> {
 		this.enabled = enabled;
 	}
 	
-	public boolean isPostalCodePrefixEnabled() {
-		return postalCodePrefixEnabled;
+	public String getPostalCodePattern() {
+		return postalCodePattern;
 	}
-	
-	public void setPostalCodePrefixEnabled(boolean postalCodePrefixEnabled) {
-		this.postalCodePrefixEnabled = postalCodePrefixEnabled;
-	}
-	
-	public boolean isPostalCodeSuffixEnabled() {
-		return postalCodeSuffixEnabled;
-	}
-	
-	public void setPostalCodeSuffixEnabled(boolean postalCodeSuffixEnabled) {
-		this.postalCodeSuffixEnabled = postalCodeSuffixEnabled;
-	}
-	
-	public Set<City> getCities() {
-		return Collections.unmodifiableSet(cities);
-	}
-	
-	boolean hasCities() {
-		return cities.size() > 0;
-	}
-	
+
 	public Continent getContinent() {
 		return continent;
 	}
 	
-	public boolean addCity(City city) {
-		return (!cities.contains(city)) ? cities.add(city) : false;
-	}
-	
-	public boolean removeCities(List<City> cities) {
-		boolean value;
-		value = this.cities.removeAll(cities);
-		return value;
-	}
-	
-	public void removeCity(City city) {
-		cities.remove(city);
+	public static boolean postalCodeMatches(Country country, String postalCode) {
+		if (country == null) {
+			return false;
+		}
+		if (country.postalCodePattern != null) {
+			return Pattern.compile(country.postalCodePattern).matcher(postalCode).matches();
+		}
+		return true;
 	}
 
 	@Override
@@ -135,11 +103,5 @@ public class Country implements Serializable, Comparable<Country> {
 		} else if (!name.equalsIgnoreCase(other.name))
 			return false;
 		return true;
-	}
-
-
-	@Override
-	public int compareTo(Country country) {
-		return name.compareToIgnoreCase(country.name);
 	}
 }

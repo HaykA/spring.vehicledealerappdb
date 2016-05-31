@@ -12,6 +12,7 @@ public final class BranchResourceResolver {
 	
 	public static final class Path {
 		public static final String BRANCHES = BranchAttributes.BRANCHES;
+		public static final String BRANCHES_CLEANBRANCH = BRANCHES + "/{" + BranchAttributes.BRANCH + '}';
 		public static final String BRANCHES_NEW = BRANCHES + "/new";
 	}
 	
@@ -22,7 +23,8 @@ public final class BranchResourceResolver {
 		public static final String INDEX = "index";
 		public static final String SETTINGS = "settings";
 		public static final String SETTINGS_BRANCH = SETTINGS + '/' + BranchAttributes.BRANCH;
-		public static final String SETTINGS_BRANCHES = SETTINGS_BRANCH + '/' + BranchAttributes.BRANCHES;
+		public static final String SETTINGS_BRANCH_BRANCHES = SETTINGS_BRANCH + '/' + BranchAttributes.BRANCHES;
+		public static final String SETTINGS_BRANCH_BRANCH = SETTINGS_BRANCH + '/' + BranchAttributes.BRANCH;
 		public static final String SETTINGS_BRANCH_NEWBRANCH = SETTINGS_BRANCH + "/newbranch";
 		
 		

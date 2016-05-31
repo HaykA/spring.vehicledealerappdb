@@ -1,10 +1,12 @@
 package com.vehicledealerapp.services;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 import com.vehicledealerapp.persistence.general.entities.Branch;
+import com.vehicledealerapp.persistence.shared.entities.Country;
 
 public interface BranchService {
-	Page<Branch> findAll(Pageable pageable);
+	List<Branch> findAll();
+	List<Country> findEnabledCountries();
+	void updateBranch(Branch branch);
 }

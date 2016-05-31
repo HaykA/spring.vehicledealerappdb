@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.vehicledealerapp.persistence.general.entities.Person;
+import com.vehicledealerapp.persistence.general.entities.Member;
 
 @Entity(name="auth_user")
 public class User implements Serializable {
@@ -22,5 +22,5 @@ public class User implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "personid")
-	private Person person;
+	private Member person;
 }

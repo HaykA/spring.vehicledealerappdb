@@ -3,22 +3,26 @@ package com.vehicledealerapp.persistence.general.valueobjects;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Embedded;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-import com.vehicledealerapp.persistence.general.entities.City;
+import org.hibernate.validator.constraints.Length;
 
 @Embeddable
 public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
+	@Length(min = 3, max = 45)
 	private String street;
-	private String house;
-	private String apt;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cityid")
+	@NotNull
+	@Length(min = 1, max = 15)
+	private String house;
+	
+	@Valid
+	@Embedded
 	private City city;
 
 	public String getStreet() {
@@ -27,10 +31,6 @@ public class Address implements Serializable {
 
 	public String getHouse() {
 		return house;
-	}
-
-	public String getApt() {
-		return apt;
 	}
 
 	public City getCity() {
@@ -45,7 +45,6 @@ public class Address implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((apt == null) ? 0 : apt.hashCode());
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((house == null) ? 0 : house.hashCode());
 		result = prime * result + ((street == null) ? 0 : street.hashCode());
@@ -61,11 +60,6 @@ public class Address implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Address other = (Address) obj;
-		if (apt == null) {
-			if (other.apt != null)
-				return false;
-		} else if (!apt.equals(other.apt))
-			return false;
 		if (city == null) {
 			if (other.city != null)
 				return false;

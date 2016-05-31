@@ -4,7 +4,7 @@ USE `vehicledealerappdb`;
 --
 -- Host: localhost    Database: vehicledealerappdb
 -- ------------------------------------------------------
--- Server version	5.6.30-log
+-- Server version	5.7.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -70,7 +70,7 @@ CREATE TABLE `article_person` (
   PRIMARY KEY (`articleid`,`personid`),
   KEY `fk_article_person$person_idx` (`personid`),
   CONSTRAINT `fk_article_person$article` FOREIGN KEY (`articleid`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_article_person$person` FOREIGN KEY (`personid`) REFERENCES `person` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_article_person$person` FOREIGN KEY (`personid`) REFERENCES `member` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -194,16 +194,23 @@ DROP TABLE IF EXISTS `branch`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `branch` (
   `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `street` varchar(45) DEFAULT NULL,
-  `house` varchar(10) DEFAULT NULL,
-  `apt` varchar(10) DEFAULT NULL,
-  `cityid` int(9) unsigned NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `street` varchar(45) NOT NULL,
+  `house` varchar(15) NOT NULL,
+  `postalcode` varchar(15) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `countryid` int(3) unsigned NOT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `fax` varchar(45) DEFAULT NULL,
+  `extra` varchar(2000) DEFAULT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `fk_branch$city_idx` (`cityid`),
-  CONSTRAINT `fk_branch$city` FOREIGN KEY (`cityid`) REFERENCES `city` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  KEY `fk_branch$country_idx` (`countryid`),
+  CONSTRAINT `fk_branch$country` FOREIGN KEY (`countryid`) REFERENCES `country` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +219,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (1,'Base Cars','Appelmansstraat','1170',NULL,3);
+INSERT INTO `branch` VALUES (1,'Base Cars','Appelmansstraat','1170','2018','Antwerpen',17,NULL,NULL,NULL,NULL,1),(2,'Base Cars Roeselare','Brugsesteenweg','103','8800','Roeselare',17,NULL,NULL,NULL,NULL,1),(3,'Base Cars Kortrijk','Stationstraat','10A','8500','Kortrijk',17,'test@test.be','0474747474','051213242','Hello World',1);
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,35 +275,6 @@ LOCK TABLES `category` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `city`
---
-
-DROP TABLE IF EXISTS `city`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `city` (
-  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `countryid` int(3) unsigned NOT NULL,
-  `postalcode` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `fk_city$country_idx` (`countryid`),
-  CONSTRAINT `fk_city$country` FOREIGN KEY (`countryid`) REFERENCES `country` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `city`
---
-
-LOCK TABLES `city` WRITE;
-/*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (1,'Brussel',17,'1000'),(2,'Yerevan',8,'0004'),(3,'Antwerpen',17,'2018'),(6,'Gent',17,'9000'),(7,'Roeselare',17,'8800'),(8,'Kortrijk',17,'8500'),(9,'Antwerpen',17,'2020'),(10,'Brugge',17,'8000'),(11,'Antwerpen',17,'2000'),(12,'Yerevan',8,'0001');
-/*!40000 ALTER TABLE `city` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `continent`
 --
 
@@ -334,8 +312,7 @@ CREATE TABLE `country` (
   `nativename` varchar(45) DEFAULT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
   `continentid` int(1) unsigned DEFAULT NULL,
-  `postalcodeprefixenabled` tinyint(1) NOT NULL DEFAULT '0',
-  `postalcodesuffixenabled` tinyint(1) NOT NULL DEFAULT '0',
+  `postalcodepattern` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
@@ -350,7 +327,7 @@ CREATE TABLE `country` (
 
 LOCK TABLES `country` WRITE;
 /*!40000 ALTER TABLE `country` DISABLE KEYS */;
-INSERT INTO `country` VALUES (1,'Afghanistan',NULL,0,4,0,0),(2,'Albania',NULL,0,2,0,0),(3,'Algeria',NULL,0,4,0,0),(4,'Andorra',NULL,0,2,0,0),(5,'Angola',NULL,0,4,0,0),(6,'Antigua and Barbuda',NULL,0,3,0,0),(7,'Argentina',NULL,0,3,0,0),(8,'Armenia','Հայաստան',0,2,0,0),(9,'Australia',NULL,0,1,0,0),(10,'Austria',NULL,0,2,0,0),(11,'Azerbaijan',NULL,0,2,0,0),(12,'Bahamas',NULL,0,3,0,0),(13,'Bahrain',NULL,0,4,0,0),(14,'Bangladesh',NULL,0,1,0,0),(15,'Barbados',NULL,0,3,0,0),(16,'Belarus',NULL,0,2,0,0),(17,'Belgium','',1,2,0,0),(18,'Belize',NULL,0,3,0,0),(19,'Benin',NULL,0,4,0,0),(20,'Bhutan',NULL,0,1,0,0),(21,'Bolivia',NULL,0,3,0,0),(22,'Bosnia and Herzegovina',NULL,0,2,0,0),(23,'Botswana',NULL,0,4,0,0),(24,'Brazil',NULL,0,3,0,0),(25,'Brunei',NULL,0,1,0,0),(26,'Bulgaria',NULL,1,2,0,0),(27,'Burkina Faso',NULL,0,4,0,0),(28,'Burundi',NULL,0,4,0,0),(29,'Cambodia',NULL,0,1,0,0),(30,'Cameroon',NULL,0,4,0,0),(31,'Canada',NULL,1,5,0,0),(32,'Cape Verde',NULL,0,4,0,0),(33,'Central African Republic',NULL,0,4,0,0),(34,'Chad',NULL,0,4,0,0),(35,'Chile',NULL,0,3,0,0),(36,'China',NULL,0,1,0,0),(37,'Colombia',NULL,0,3,0,0),(38,'Comoros',NULL,0,4,0,0),(39,'Congo (DRC)',NULL,0,4,0,0),(40,'Congo (Republic)',NULL,0,4,0,0),(41,'Costa Rica',NULL,0,3,0,0),(42,'Croatia',NULL,0,2,0,0),(43,'Cuba',NULL,0,3,0,0),(44,'Cyprus',NULL,0,2,0,0),(45,'Czech Republic',NULL,0,2,0,0),(46,'Denmark',NULL,0,2,0,0),(47,'Djibouti',NULL,0,4,0,0),(48,'Dominica',NULL,0,3,0,0),(49,'Dominican Republic',NULL,0,3,0,0),(50,'East Timor',NULL,0,1,0,0),(51,'Ecuador',NULL,0,3,0,0),(52,'Egypt',NULL,0,4,0,0),(53,'El Salvador',NULL,0,3,0,0),(54,'Equatorial Guinea',NULL,0,4,0,0),(55,'Eritrea',NULL,0,4,0,0),(56,'Estonia',NULL,0,2,0,0),(57,'Ethiopia',NULL,0,4,0,0),(58,'Federated States of Micronesia',NULL,0,1,0,0),(59,'Fiji',NULL,0,1,0,0),(60,'Finland',NULL,0,2,0,0),(61,'France',NULL,0,2,0,0),(62,'Gabon',NULL,0,4,0,0),(63,'Gambia',NULL,0,4,0,0),(64,'Georgia',NULL,0,2,0,0),(65,'Germany',NULL,0,2,0,0),(66,'Ghana',NULL,0,4,0,0),(67,'Greece',NULL,0,2,0,0),(68,'Grenada',NULL,0,3,0,0),(69,'Guatemala',NULL,0,3,0,0),(70,'Guinea',NULL,0,4,0,0),(71,'Guinea-Bissau',NULL,0,4,0,0),(72,'Guyana',NULL,0,1,0,0),(73,'Haiti',NULL,0,3,0,0),(74,'Honduras',NULL,0,3,0,0),(75,'Hungary',NULL,0,2,0,0),(76,'Iceland',NULL,0,2,0,0),(77,'India',NULL,0,1,0,0),(78,'Indonesia',NULL,0,1,0,0),(79,'Iran',NULL,0,4,0,0),(80,'Iraq',NULL,0,4,0,0),(81,'Ireland',NULL,0,2,0,0),(82,'Israel',NULL,0,4,0,0),(83,'Italy',NULL,0,2,0,0),(84,'Ivory Coast',NULL,0,4,0,0),(85,'Jamaica',NULL,0,3,0,0),(86,'Japan',NULL,0,1,0,0),(87,'Jordan',NULL,0,4,0,0),(88,'Kazakhstan',NULL,0,1,0,0),(89,'Kenya',NULL,0,4,0,0),(90,'Kiribati',NULL,0,1,0,0),(91,'Kuwait',NULL,0,4,0,0),(92,'Kyrgyzstan',NULL,0,1,0,0),(93,'Laos',NULL,0,1,0,0),(94,'Latvia',NULL,0,2,0,0),(95,'Lebanon',NULL,0,4,0,0),(96,'Lesotho',NULL,0,4,0,0),(97,'Liberia',NULL,0,4,0,0),(98,'Libya',NULL,0,4,0,0),(99,'Liechtenstein',NULL,0,2,0,0),(100,'Lithuania',NULL,0,2,0,0),(101,'Luxembourg',NULL,0,2,0,0),(102,'Macedonia',NULL,0,2,0,0),(103,'Madagascar',NULL,0,4,0,0),(104,'Malawi',NULL,0,4,0,0),(105,'Malaysia',NULL,0,1,0,0),(106,'Maldives',NULL,0,1,0,0),(107,'Mali',NULL,0,4,0,0),(108,'Malta',NULL,0,2,0,0),(109,'Marshall Islands',NULL,0,1,0,0),(110,'Mauritania',NULL,0,4,0,0),(111,'Mauritius',NULL,0,4,0,0),(112,'Mexico',NULL,0,3,0,0),(113,'Moldova',NULL,0,2,0,0),(114,'Monaco',NULL,0,2,0,0),(115,'Mongolia',NULL,0,1,0,0),(116,'Montenegro',NULL,0,2,0,0),(117,'Morocco',NULL,0,4,0,0),(118,'Mozambique',NULL,0,4,0,0),(119,'Myanmar',NULL,0,1,0,0),(120,'Namibia',NULL,0,4,0,0),(121,'Nauru',NULL,0,1,0,0),(122,'Nepal',NULL,0,1,0,0),(123,'Netherlands','Nederland',1,2,0,1),(124,'New Zealand',NULL,0,1,0,0),(125,'Nicaragua',NULL,0,3,0,0),(126,'Niger',NULL,0,4,0,0),(127,'Nigeria',NULL,0,4,0,0),(128,'North Korea',NULL,0,1,0,0),(129,'Norway',NULL,0,2,0,0),(130,'Oman',NULL,0,4,0,0),(131,'Pakistan',NULL,0,1,0,0),(132,'Palau',NULL,0,1,0,0),(133,'Palestine',NULL,0,4,0,0),(134,'Panama',NULL,0,3,0,0),(135,'Papua New Guinea',NULL,0,1,0,0),(136,'Paraguay',NULL,0,3,0,0),(137,'Peru',NULL,0,3,0,0),(138,'Philippines',NULL,0,1,0,0),(139,'Poland',NULL,0,2,0,0),(140,'Portugal',NULL,0,2,0,0),(141,'Qatar',NULL,0,4,0,0),(142,'Romania',NULL,0,2,0,0),(143,'Russia','Россия',1,2,0,0),(144,'Rwanda',NULL,0,4,0,0),(145,'Saint Kitts and Nevis',NULL,0,3,0,0),(146,'Saint Lucia',NULL,0,3,0,0),(147,'Saint Vincent and the Grenadines',NULL,0,3,0,0),(148,'Samoa',NULL,0,1,0,0),(149,'San Marino',NULL,0,2,0,0),(150,'Saudi Arabia',NULL,0,4,0,0),(151,'Senegal',NULL,0,4,0,0),(152,'Serbia',NULL,0,2,0,0),(153,'Seychelles',NULL,0,4,0,0),(154,'Sierra Leone',NULL,0,4,0,0),(155,'Singapore',NULL,0,1,0,0),(156,'Slovakia',NULL,0,2,0,0),(157,'Slovenia',NULL,0,2,0,0),(158,'Solomon Islands',NULL,0,1,0,0),(159,'Somalia',NULL,0,4,0,0),(160,'South Africa',NULL,0,4,0,0),(161,'South Korea',NULL,0,1,0,0),(162,'South Sudan',NULL,0,4,0,0),(163,'Spain',NULL,0,2,0,0),(164,'Sri Lanka',NULL,0,1,0,0),(165,'Sudan',NULL,0,4,0,0),(166,'Suriname',NULL,0,3,0,0),(167,'Swaziland',NULL,0,4,0,0),(168,'Sweden',NULL,0,2,0,0),(169,'Switzerland',NULL,0,2,0,0),(170,'Syria',NULL,0,4,0,0),(171,'São Tomé and Príncipe',NULL,0,4,0,0),(172,'Tajikistan',NULL,0,1,0,0),(173,'Tanzania',NULL,0,4,0,0),(174,'Thailand',NULL,0,1,0,0),(175,'Togo',NULL,0,4,0,0),(176,'Tonga',NULL,0,1,0,0),(177,'Trinidad and Tobago',NULL,0,3,0,0),(178,'Tunisia',NULL,0,4,0,0),(179,'Turkey',NULL,0,2,0,0),(180,'Turkmenistan',NULL,0,1,0,0),(181,'Tuvalu',NULL,0,1,0,0),(182,'Uganda',NULL,0,4,0,0),(183,'Ukraine',NULL,0,2,0,0),(184,'United Arab Emirates',NULL,0,4,0,0),(185,'United Kingdom',NULL,0,2,0,0),(186,'United States',NULL,0,5,0,0),(187,'Uruguay',NULL,0,3,0,0),(188,'Uzbekistan',NULL,0,1,0,0),(189,'Vanuatu',NULL,0,1,0,0),(190,'Vatican City',NULL,0,1,0,0),(191,'Venezuela',NULL,0,3,0,0),(192,'Vietnam',NULL,0,1,0,0),(193,'Yemen',NULL,0,4,0,0),(194,'Zambia',NULL,0,4,0,0),(195,'Zimbabwe',NULL,0,4,0,0);
+INSERT INTO `country` VALUES (1,'Afghanistan',NULL,0,4,NULL),(2,'Albania',NULL,0,2,NULL),(3,'Algeria',NULL,0,4,NULL),(4,'Andorra',NULL,0,2,NULL),(5,'Angola',NULL,0,4,NULL),(6,'Antigua and Barbuda',NULL,0,3,NULL),(7,'Argentina',NULL,0,3,NULL),(8,'Armenia','Հայաստան',0,2,NULL),(9,'Australia',NULL,0,1,NULL),(10,'Austria',NULL,0,2,NULL),(11,'Azerbaijan',NULL,0,2,NULL),(12,'Bahamas',NULL,0,3,NULL),(13,'Bahrain',NULL,0,4,NULL),(14,'Bangladesh',NULL,0,1,NULL),(15,'Barbados',NULL,0,3,NULL),(16,'Belarus',NULL,0,2,NULL),(17,'Belgium','',1,2,'^[1-9]\\d{3}$'),(18,'Belize',NULL,0,3,NULL),(19,'Benin',NULL,0,4,NULL),(20,'Bhutan',NULL,0,1,NULL),(21,'Bolivia',NULL,0,3,NULL),(22,'Bosnia and Herzegovina',NULL,0,2,NULL),(23,'Botswana',NULL,0,4,NULL),(24,'Brazil',NULL,0,3,NULL),(25,'Brunei',NULL,0,1,NULL),(26,'Bulgaria',NULL,1,2,NULL),(27,'Burkina Faso',NULL,0,4,NULL),(28,'Burundi',NULL,0,4,NULL),(29,'Cambodia',NULL,0,1,NULL),(30,'Cameroon',NULL,0,4,NULL),(31,'Canada',NULL,1,5,NULL),(32,'Cape Verde',NULL,0,4,NULL),(33,'Central African Republic',NULL,0,4,NULL),(34,'Chad',NULL,0,4,NULL),(35,'Chile',NULL,0,3,NULL),(36,'China',NULL,0,1,NULL),(37,'Colombia',NULL,0,3,NULL),(38,'Comoros',NULL,0,4,NULL),(39,'Congo (DRC)',NULL,0,4,NULL),(40,'Congo (Republic)',NULL,0,4,NULL),(41,'Costa Rica',NULL,0,3,NULL),(42,'Croatia',NULL,0,2,NULL),(43,'Cuba',NULL,0,3,NULL),(44,'Cyprus',NULL,0,2,NULL),(45,'Czech Republic',NULL,0,2,NULL),(46,'Denmark',NULL,0,2,NULL),(47,'Djibouti',NULL,0,4,NULL),(48,'Dominica',NULL,0,3,NULL),(49,'Dominican Republic',NULL,0,3,NULL),(50,'East Timor',NULL,0,1,NULL),(51,'Ecuador',NULL,0,3,NULL),(52,'Egypt',NULL,0,4,NULL),(53,'El Salvador',NULL,0,3,NULL),(54,'Equatorial Guinea',NULL,0,4,NULL),(55,'Eritrea',NULL,0,4,NULL),(56,'Estonia',NULL,0,2,NULL),(57,'Ethiopia',NULL,0,4,NULL),(58,'Federated States of Micronesia',NULL,0,1,NULL),(59,'Fiji',NULL,0,1,NULL),(60,'Finland',NULL,0,2,NULL),(61,'France',NULL,0,2,NULL),(62,'Gabon',NULL,0,4,NULL),(63,'Gambia',NULL,0,4,NULL),(64,'Georgia',NULL,0,2,NULL),(65,'Germany',NULL,0,2,NULL),(66,'Ghana',NULL,0,4,NULL),(67,'Greece',NULL,0,2,NULL),(68,'Grenada',NULL,0,3,NULL),(69,'Guatemala',NULL,0,3,NULL),(70,'Guinea',NULL,0,4,NULL),(71,'Guinea-Bissau',NULL,0,4,NULL),(72,'Guyana',NULL,0,1,NULL),(73,'Haiti',NULL,0,3,NULL),(74,'Honduras',NULL,0,3,NULL),(75,'Hungary',NULL,0,2,NULL),(76,'Iceland',NULL,0,2,NULL),(77,'India',NULL,0,1,NULL),(78,'Indonesia',NULL,0,1,NULL),(79,'Iran',NULL,0,4,NULL),(80,'Iraq',NULL,0,4,NULL),(81,'Ireland',NULL,0,2,NULL),(82,'Israel',NULL,0,4,NULL),(83,'Italy',NULL,0,2,NULL),(84,'Ivory Coast',NULL,0,4,NULL),(85,'Jamaica',NULL,0,3,NULL),(86,'Japan',NULL,0,1,NULL),(87,'Jordan',NULL,0,4,NULL),(88,'Kazakhstan',NULL,0,1,NULL),(89,'Kenya',NULL,0,4,NULL),(90,'Kiribati',NULL,0,1,NULL),(91,'Kuwait',NULL,0,4,NULL),(92,'Kyrgyzstan',NULL,0,1,NULL),(93,'Laos',NULL,0,1,NULL),(94,'Latvia',NULL,0,2,NULL),(95,'Lebanon',NULL,0,4,NULL),(96,'Lesotho',NULL,0,4,NULL),(97,'Liberia',NULL,0,4,NULL),(98,'Libya',NULL,0,4,NULL),(99,'Liechtenstein',NULL,0,2,NULL),(100,'Lithuania',NULL,0,2,NULL),(101,'Luxembourg',NULL,0,2,NULL),(102,'Macedonia',NULL,0,2,NULL),(103,'Madagascar',NULL,0,4,NULL),(104,'Malawi',NULL,0,4,NULL),(105,'Malaysia',NULL,0,1,NULL),(106,'Maldives',NULL,0,1,NULL),(107,'Mali',NULL,0,4,NULL),(108,'Malta',NULL,0,2,NULL),(109,'Marshall Islands',NULL,0,1,NULL),(110,'Mauritania',NULL,0,4,NULL),(111,'Mauritius',NULL,0,4,NULL),(112,'Mexico',NULL,0,3,NULL),(113,'Moldova',NULL,0,2,NULL),(114,'Monaco',NULL,0,2,NULL),(115,'Mongolia',NULL,0,1,NULL),(116,'Montenegro',NULL,0,2,NULL),(117,'Morocco',NULL,0,4,NULL),(118,'Mozambique',NULL,0,4,NULL),(119,'Myanmar',NULL,0,1,NULL),(120,'Namibia',NULL,0,4,NULL),(121,'Nauru',NULL,0,1,NULL),(122,'Nepal',NULL,0,1,NULL),(123,'Netherlands','Nederland',1,2,NULL),(124,'New Zealand',NULL,0,1,NULL),(125,'Nicaragua',NULL,0,3,NULL),(126,'Niger',NULL,0,4,NULL),(127,'Nigeria',NULL,0,4,NULL),(128,'North Korea',NULL,0,1,NULL),(129,'Norway',NULL,0,2,NULL),(130,'Oman',NULL,0,4,NULL),(131,'Pakistan',NULL,0,1,NULL),(132,'Palau',NULL,0,1,NULL),(133,'Palestine',NULL,0,4,NULL),(134,'Panama',NULL,0,3,NULL),(135,'Papua New Guinea',NULL,0,1,NULL),(136,'Paraguay',NULL,0,3,NULL),(137,'Peru',NULL,0,3,NULL),(138,'Philippines',NULL,0,1,NULL),(139,'Poland',NULL,0,2,NULL),(140,'Portugal',NULL,0,2,NULL),(141,'Qatar',NULL,0,4,NULL),(142,'Romania',NULL,0,2,NULL),(143,'Russia','Россия',1,2,NULL),(144,'Rwanda',NULL,0,4,NULL),(145,'Saint Kitts and Nevis',NULL,0,3,NULL),(146,'Saint Lucia',NULL,0,3,NULL),(147,'Saint Vincent and the Grenadines',NULL,0,3,NULL),(148,'Samoa',NULL,0,1,NULL),(149,'San Marino',NULL,0,2,NULL),(150,'Saudi Arabia',NULL,0,4,NULL),(151,'Senegal',NULL,0,4,NULL),(152,'Serbia',NULL,0,2,NULL),(153,'Seychelles',NULL,0,4,NULL),(154,'Sierra Leone',NULL,0,4,NULL),(155,'Singapore',NULL,0,1,NULL),(156,'Slovakia',NULL,0,2,NULL),(157,'Slovenia',NULL,0,2,NULL),(158,'Solomon Islands',NULL,0,1,NULL),(159,'Somalia',NULL,0,4,NULL),(160,'South Africa',NULL,0,4,NULL),(161,'South Korea',NULL,0,1,NULL),(162,'South Sudan',NULL,0,4,NULL),(163,'Spain',NULL,0,2,NULL),(164,'Sri Lanka',NULL,0,1,NULL),(165,'Sudan',NULL,0,4,NULL),(166,'Suriname',NULL,0,3,NULL),(167,'Swaziland',NULL,0,4,NULL),(168,'Sweden',NULL,0,2,NULL),(169,'Switzerland',NULL,0,2,NULL),(170,'Syria',NULL,0,4,NULL),(171,'São Tomé and Príncipe',NULL,0,4,NULL),(172,'Tajikistan',NULL,0,1,NULL),(173,'Tanzania',NULL,0,4,NULL),(174,'Thailand',NULL,0,1,NULL),(175,'Togo',NULL,0,4,NULL),(176,'Tonga',NULL,0,1,NULL),(177,'Trinidad and Tobago',NULL,0,3,NULL),(178,'Tunisia',NULL,0,4,NULL),(179,'Turkey',NULL,0,2,NULL),(180,'Turkmenistan',NULL,0,1,NULL),(181,'Tuvalu',NULL,0,1,NULL),(182,'Uganda',NULL,0,4,NULL),(183,'Ukraine',NULL,0,2,NULL),(184,'United Arab Emirates',NULL,0,4,NULL),(185,'United Kingdom',NULL,0,2,NULL),(186,'United States',NULL,0,5,NULL),(187,'Uruguay',NULL,0,3,NULL),(188,'Uzbekistan',NULL,0,1,NULL),(189,'Vanuatu',NULL,0,1,NULL),(190,'Vatican City',NULL,0,1,NULL),(191,'Venezuela',NULL,0,3,NULL),(192,'Vietnam',NULL,0,1,NULL),(193,'Yemen',NULL,0,4,NULL),(194,'Zambia',NULL,0,4,NULL),(195,'Zimbabwe',NULL,0,4,NULL);
 /*!40000 ALTER TABLE `country` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,13 +356,13 @@ LOCK TABLES `currency` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `person`
+-- Table structure for table `member`
 --
 
-DROP TABLE IF EXISTS `person`;
+DROP TABLE IF EXISTS `member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `person` (
+CREATE TABLE `member` (
   `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
   `firstname` varchar(45) NOT NULL,
   `secondname` varchar(45) NOT NULL,
@@ -396,43 +373,13 @@ CREATE TABLE `person` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `person`
+-- Dumping data for table `member`
 --
 
-LOCK TABLES `person` WRITE;
-/*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (1,'Hayk','Avetisyan',1);
-/*!40000 ALTER TABLE `person` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `street`
---
-
-DROP TABLE IF EXISTS `street`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `street` (
-  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `postalcodeprefix` varchar(5) DEFAULT NULL,
-  `postalcodesuffix` varchar(5) DEFAULT NULL,
-  `cityid` int(9) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `fk_street$city_idx` (`cityid`),
-  CONSTRAINT `fk_street$city` FOREIGN KEY (`cityid`) REFERENCES `city` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `street`
---
-
-LOCK TABLES `street` WRITE;
-/*!40000 ALTER TABLE `street` DISABLE KEYS */;
-INSERT INTO `street` VALUES (1,'Appelmansstraat',NULL,NULL,3);
-/*!40000 ALTER TABLE `street` ENABLE KEYS */;
+LOCK TABLES `member` WRITE;
+/*!40000 ALTER TABLE `member` DISABLE KEYS */;
+INSERT INTO `member` VALUES (1,'Hayk','Avetisyan',1);
+/*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -571,4 +518,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-30 23:52:42
+-- Dump completed on 2016-05-31 16:07:35

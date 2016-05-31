@@ -38,14 +38,10 @@
         </div>
       </div>
       
-      <div class="col-sm-12 row">
-          <form:checkbox id="postalCodePrefixEnabled" path="postalCodePrefixEnabled" cssClass="medium" role="masterForHidableSlaves"/>
-          <label for="postalCodePrefixEnabled" class="medium"> Postal Code Prefix</label>
-      </div>
-
-      <div class="col-sm-12 row">
-          <form:checkbox id="postalCodeSuffixEnabled" path="postalCodeSuffixEnabled" cssClass="medium" role="masterForHidableSlaves"/>
-          <label for="postalCodeSuffixEnabled" class="medium">Postal Code Suffix</label>
+      <div class="col-sm-12 row vertically-spaced">
+        <div class="col-sm-6 row">
+          <form:input path="postalCodePattern" placeholder="Postal Code Pattern" role="masterForHidableSlaves" cssClass="form-control"/>
+        </div>
       </div>
     </div>
 

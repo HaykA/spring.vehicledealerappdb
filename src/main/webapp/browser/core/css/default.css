@@ -122,3 +122,16 @@ header .navbar-header .navbar-brand {
 .vertically-spaced {
 	margin-bottom: 20px;
 }
+
+.fixed-textarea {
+    resize: none;
+}
+
+.mandatory {
+  background-color: #becacd;
+}
+
+.field-error {
+  margin-top: 5px;
+  margin-bottom: 0;
+}

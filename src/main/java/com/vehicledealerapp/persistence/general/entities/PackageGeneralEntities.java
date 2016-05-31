@@ -4,6 +4,6 @@ public final class PackageGeneralEntities {
 	private PackageGeneralEntities() {}
 	
 	public static String getName() {
-		return PackageGeneralEntities.class.getPackage().getName(); 
+		return PackageGeneralEntities.class.getPackage().getName();
 	}
 }

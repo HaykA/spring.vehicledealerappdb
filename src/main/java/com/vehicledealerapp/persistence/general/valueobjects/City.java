@@ -1,52 +1,30 @@
-package com.vehicledealerapp.persistence.general.entities;
+package com.vehicledealerapp.persistence.general.valueobjects;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
-import com.vehicledealerapp.persistence.shared.entities.Country;
+import org.hibernate.validator.constraints.Length;
 
-@Entity
-
+@Embeddable
 public class City implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String WITH_COUNTRY = "City.withCountry";
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+
+	@Column(name="city")
+	@NotNull
+	@Length(min = 2, max = 45)
 	private String name;
 	
+	@NotNull
+	@Length(min = 3, max = 15)
 	private String postalCode;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "countryid")
-	private Country country;
-	
-	public City() {}
-	
-	public City(Country country) {
-		this.country = country;
-	}
-	
-	public long getId() {
-		return id;
-	}
 	
 	public String getName() {
 		return name;
-	}
-	
-	public Country getCountry() {
-		return country;
 	}
 	
 	public String getPostalCode() {

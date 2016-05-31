@@ -16,8 +16,8 @@ import javax.persistence.OneToOne;
 import com.vehicledealerapp.persistence.subject.entities.Article;
 import com.vehicledealerapp.persistence.system.entities.User;
 
-@Entity(name = "person")
-public class Person implements Serializable {
+@Entity
+public class Member implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
